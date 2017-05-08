@@ -1,0 +1,66 @@
+<!doctype html> 
+<html lang="es">
+<head>
+  <meta content="text/html; charset=UTF-8"/>
+  <title>Inicio</title>
+</head>
+<body>
+    <div>
+      <nav>
+        <div>
+          <ul>
+            {% if login == 'no' %}
+              <li><a href="/iniciosesion">Iniciar Sesión</a></li>
+              <li><a href="/registro">Registro</a></li>
+            {% else %}
+              <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
+            {% endif %}
+<!--
+            {% if rol == 'Anonimo' or rol == 'Usuario' or rol == 'Admin'%}
+              <li><a href="/pregunta/busqueda">Buscar</a></li>
+              <a class='dropdown-button' href='#' data-activates='dropdown1'>Cuestionario</a>
+                <ul id='dropdown1' class='dropdown-content'>
+                 <li><a href="/pregunta/lista">Todas las preguntas</a></li>
+                </ul>
+            {% endif %}
+            {% if rol == 'Usuario' or rol == 'Admin'%}
+              <a class='dropdown-button' href='#' data-activates='dropdown3'>Mis preguntas</a>
+                <ul id='dropdown3' class='dropdown-content'>
+                 <li><a href="/pregunta/stored">Guardadas</a></li>
+                 <li><a href="/pregunta/propias">Mis creaciones</a></li>
+                 <li><a href="/pregunta/crear">Añadir pregunta</a></li>
+                </ul>
+            {% endif %}
+            {% if rol == 'Admin' %}
+             <li><a href="/admin">Administración</a></li>
+            {% endif %}
+          </ul>
+          <ul>
+            {% if login == 'no' %}
+              <li><a href="/iniciosesion">Iniciar Sesión</a></li>
+              <li><a href="/registro">Registro</a></li>
+            {% else %}
+              <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
+            {% endif %}
+
+            {% if rol == 'Anonimo' or rol == 'Usuario' or rol == 'Admin'%}
+              <li><a href="/pregunta/busqueda">Buscar</a></li>
+              <li><a href="/pregunta/lista">Todas las preguntas</a></li>
+            {% endif %}
+            {% if rol == 'Usuario' or rol == 'Admin'%}
+                 <li><a href="/pregunta/stored">Guardadas</a></li>
+                 <li><a href="/pregunta/propias">Mis creaciones</a></li>
+                 <li><a href="/pregunta/crear">Añadir pregunta</a></li>
+            {% endif %}
+            {% if rol == 'Admin' %}
+             <li><a href="/admin">Administración</a></li>
+            {% endif %}-->
+          </ul>
+        </div>
+      </nav>
+    </div>
+        {% block content %}
+
+        {% endblock %}
+
+{% extends "footer.html" %}

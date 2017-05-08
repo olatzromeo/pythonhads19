@@ -1,0 +1,64 @@
+  {% extends "main.html" %}
+
+  {%block content %}
+
+    <div class="container">
+    <div class="section">
+      <!--   Icon Section   -->
+      <div class="row">
+<style type="text/css"> .label {text-align: right} .error {color: red} </style>
+          <div>
+                <form method="POST">
+                  <div > <h2> Registro </h2></div>
+                  <div >
+                    <div>
+                      <input name="name" id="Nombre" type="text"  length="30" value="%(name)s">
+                      <label for="Nombre" data-error="%(name_error)s">Nombre</label>
+                      <div> %(name_error)s </div>
+                    </div>
+                    <div>
+                      <input name="surname" id="Apellido" type="text" length="30" value="%(surname)s">
+                      <div> %(surname_error)s </div>
+                      <label for="Apellido" data-error="%(surname_error)s">Apellidos</label>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <input name="username" id="nick" type="text" length="20" value="%(username)s">
+                      <div > %(username_error)s </div>
+                      <label for="Nick">Nick</label>
+                    </div>
+                  </div>
+                  <div >
+                    <div >
+                      <input name="email" id="email" type="email" length="50" value="%(email)s">
+                      <div> %(email_error)s </div>
+                      <label for="email">Email</label>
+                    </div>
+                  </div>
+                  <div >
+                    <div >
+                      <input name="password" id="password" type="password" value="%(password)s">
+                      <div> %(password_error)s </div>
+                      <label for="password">Contraseña</label>
+                    </div>
+                  </div>
+                  <div >
+                    <div >
+                      <input name="verify" id="verify" type="password" value="%(verify)s">
+                      <div > %(verify_error)s </div>
+                      <label for="password2">Contraseña</label>
+                    </div>
+                  </div>
+                  <div >
+                   <button  type="submit" name="action">Registrar
+                   </button>
+                  </div>
+                </form>
+          </div>
+      </div>
+
+    </div>
+  </div>
+
+  {% endblock %}

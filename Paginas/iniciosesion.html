@@ -1,0 +1,31 @@
+  {% extends "main.html" %}
+
+  {% block content %}
+
+  <h1>Iniciar Sesion</h1>
+  <style>
+    table, th, td {border: hidden; }
+  </style>
+  <form action="/iniciosesion" method="post">
+   <table> 
+    <tr>
+      <td> Email de usuario </td> 
+      <td><input name="nickusuario" type="text" value=" %(nickusuario)s "></td>
+      <td> %(nick_error)s </td>
+    </tr>
+    <tr>
+     <td> Password </td>
+     <td><input name="passusuario" type="password" value="%(passusuario)s"></td>
+     <td> %(password_error)s </td>
+    </tr>
+    <tr>
+     <td></td>
+     <td><br><input type="submit" value="Iniciar Sesion" style="float: right;"></td>
+    </tr>
+    <tr>
+     <td><br><a href="/registro">Registrate</a></td>
+    </tr>
+   </table>
+  </form> 
+  
+{% endblock %}

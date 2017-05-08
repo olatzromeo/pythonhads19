@@ -1,0 +1,49 @@
+{% extends "main.html" %}
+
+  {%block content %}
+
+<div >
+<form id='insertarpreguntas' method="post">
+
+    <h1>PREGUNTAS</h1>
+    <div class="column">
+        <ul>
+            <li>
+                <label for="pregunta">Pregunta:</label>
+                <input type="text" name="pregunta" id="pregunta" required value="%(pregunta)s" />
+            </li>
+            <li>
+                <label for="sol1">Solucion 1:</label>
+                <input type="text" name="so.1" id="sol1" required class="form-input" value="%(sol1)s"/>
+            </li>
+            <li>
+                <label for="sol2">Solucion 2:</label>
+                <input type="text" name="sol2" id="sol2" required class="form-input" value="%(sol2)s"/>
+            </li>
+            <li>
+                <label for="sol3">Solucion 3:</label>
+                <input type="text" name="sol3" id="sol3" required class="form-input" value="%(sol3)s"/>
+            </li>
+            <li>
+                <label for="respuesta">Respuesta:</label>
+                <select>
+  				<option value="1">1</option>
+  				<option value="2">2</option>
+  				<option value="3">3</option>
+				</select>
+				<!--
+                <input type="text" name="respuesta" id="respuesta" required class="form-input" value="%(respuesta)s"/>
+                -->
+            </li>
+            <li>
+                <label for="tema">Tema:</label>
+                <input type="text" name="tema" id="tema" required class="form-input" value="%(tema)s"/>
+            </li>
+
+            <a href="/index"><button type="button" name="volver" id="volver" class="form-btn" rigth="20%">Volver</button></a>
+            <button  type="submit" name="boton" id="enviar"  class="form-btn">Enviar</button>
+        </ul>
+    </div>
+</form>
+</div>
+  {% endblock %}
