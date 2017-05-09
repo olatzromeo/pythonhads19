@@ -1,6 +1,6 @@
 import webapp2
 from google.appengine.ext import ndb
-from Preguntas import pregunta
+from Preguntas import Pregunta
 
 
 class Usuario(ndb.Model):
