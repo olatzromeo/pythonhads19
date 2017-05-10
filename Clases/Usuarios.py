@@ -21,7 +21,7 @@ class Usuario(ndb.Model):
     email = ndb.StringProperty()
 
     # Usuario activado o no
-    activado = ndb.BooleanProperty()
+    #activado = ndb.BooleanProperty()
 
     # rol
     rol = ndb.StringProperty()
@@ -44,11 +44,11 @@ class Usuario(ndb.Model):
 
     """
         Funcion que devuelve activado
-    """
+    
     def get_activado(self):
 
         return self.activado.id()
-
+    """
     def add_pregunta(self, pregunta):
 
         m = MiPregunta()
@@ -79,7 +79,6 @@ class Usuario(ndb.Model):
 class MiPregunta(ndb.Model):
 
     id_pregunta = ndb.GenericProperty()
-
     id_usuario = ndb.GenericProperty()
 
     def delete(self):

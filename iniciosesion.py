@@ -4,12 +4,12 @@ import jinja2
 import re
 import cgi
 import session_module
+import uuid
+import hashlib
 from BaseHandler import BaseHandler
 from webapp2_extras import sessions
 from Clases.Usuarios import Usuario
 from google.appengine.ext import db
-import uuid
-import hashlib
 
 template_dir = os.path.join(os.path.dirname(__file__), 'Paginas')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -35,47 +35,56 @@ class CerrarSesion(Handler):
 
 class InicioSesion(Handler):
 
-    def get(self, username="", passusuario="",username_error=""):
+    def write_form(self, username="", passusuario="",
+                     username_error="", password_error=""):
 
-        if self.session.get('username'):
-            self.render("errores.html", rol='Usuario', login='si', message= self.session.get('username') + "ya has iniciado antes la sesion",)
-        else:
-            self.write(render_str("iniciosesion.html",rol='Anonimo', login='no') % {"username" :username,
-                "passusuario" : passusuario,
-                "username_error" : username_error})
-
+        self.response.write(render_str("iniciosesion.html", rol='Anonimo', login='no') %  {"username" :username,"passusuario" : passusuario,"username_error" : username_error,"password_error": password_error})
+    
+    def get(self):
+         self.write_form()
+        
     def post(self):
         
-        def escape_html(s):
-            return cgi.escape(s, quote=True)
-
         user_username = self.request.get('username')
         user_password = self.request.get('passusuario')
         sani_username = escape_html(user_username)
         sani_password = escape_html(user_password)
+        password_error=""
 
+      
         hash_object = hashlib.sha512(user_password)
         hex_dig = hash_object.hexdigest()
 
-        user=Usuario.query(Usuario.nick==user_username).filter(Usuario.password==hex_dig).get()
-        if user:
-            #Usuario encontrado
-            if user.activado:
-                #Usuario activado
-                self.session['rol'] = user.rol
-                self.session['username'] = sani_username
-                self.render("main.html", rol=user.rol, login='si', message = sani_username+"has iniciado sesion correctamente" ,)
-            else:
-                #Usuario esta activado
-                self.write(render_str("iniciosesion.html", rol='Anonimo', login='no') % {"username" :sani_username,
-                "passusuario" : "",
-                "username_error" : "El usuario no esta activado"})
-
+        #user=Usuario.query(Usuario.nick==user_username).filter(Usuario.password==hex_dig).get()
+        user=Usuario.query(Usuario.nick==user_username).filter(Usuario.password==hex_dig).count() 
+        #Usuario encontrado
+        #if user.nick==user_username:
+        if user !=0:
+            self.session['rol'] = user.rol
+            self.session['username'] = sani_username
+            self.render("main.html", rol=user.rol, login='si', message = sani_username+ "has iniciado sesion correctamente",)                
         else:
             #Usuario NO encontrado
-            self.write(render_str("login.html",rol='Anonimo', login='no') % {"username" :sani_username,
-            "passusuario" : "",
-            "username_error" : "El nombre de usuario y/o contrasena no es correcto"})
+            self.write(render_str("iniciosesion.html",rol='Anonimo', login='no') % {"username" :sani_username, "passusuario" : "",
+            "username_error" : "El nombre de usuario y/o contrasena no es correcto, o no esta registrado", "password_error": ""})
+                
+        
+def escape_html(s):
+    return cgi.escape(s, quote=True)
+
+USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
+PASSWORD_RE = re.compile(r"^.{3,20}$")
+EMAIL_RE = re.compile(r"^[\S]+@[\S]+\.[\S]+$")
+
+def valid_username(username):
+    return USER_RE.match(username)
+
+def valid_password(password):
+    return PASSWORD_RE.match(password)
+
+def valid_email(email):
+    return EMAIL_RE.match(email)
+
 
 
 config = {}
