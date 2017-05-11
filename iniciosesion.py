@@ -54,12 +54,10 @@ class InicioSesion(Handler):
       
         hash_object = hashlib.sha512(user_password)
         hex_dig = hash_object.hexdigest()
-
-        #user=Usuario.query(Usuario.nick==user_username).filter(Usuario.password==hex_dig).get()
-        user=Usuario.query(Usuario.nick==user_username).filter(Usuario.password==hex_dig).count() 
-        #Usuario encontrado
-        #if user.nick==user_username:
-        if user !=0:
+        
+        user=Usuario.query(Usuario.nick==user_username).filter(Usuario.password==hex_dig).get()
+        
+        if user:
             self.session['rol'] = user.rol
             self.session['username'] = sani_username
             self.render("main.html", rol=user.rol, login='si', message = sani_username+ "has iniciado sesion correctamente",)                
