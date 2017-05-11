@@ -31,32 +31,60 @@ class MainHandler(Handler):
 
 
 
-
 class AddPregunta(Handler):
+    def get(self, tema="", enunciado="", opc1="", opc2="",opc3="",respcorrecta=""):
+
+        self.write(render_str("insertarpreguntas.html", rol="Anonimo", login="no") % {"tema" :tema,
+        "enunciado" : preg_enunciado,
+        "opc1" : opc1,
+        "opc2" : opc2,
+        "opc3" : opc3,
+        "respcorrecta" : respcorrecta}
+        )
+
+
     def post(self):
-            try:
-            tema = self.request.get('tema')
-            pregunta = self.request.get('pregunta')
+
+            preg_tema = self.request.get('tema')
+            preg_enunciado = self.request.get('pregunta')
             opc1 = self.request.get('opc.1')
             opc2 = self.request.get('opc.2')
             opc3 = self.request.get('opc.3')
             respcorrecta= self.request.get('respcorrecta')
+
+            sani_tema = escape_html(preg_tema)
+            sani_enunciado = escape_html(preg_enunciado)
+            sani_opc1 = escape_html(opc1)
+            sani_opc2 = escape_html(opc2)
+            sani_opc3 = escape_html(opc3)
+            sani_respcorrecta = escape_html(respcorrecta)
+            errores=""
+
+            usuario = self.session.get('username')
+            u = Usuario.query(Usuario.nick == usuario).fetch()[0]
            
-            if tema != "" and pregunta != "" and opc1!="" and opc2=""and opc3="" and respcorrecta="":
-                r = Receta.get_by_id(int(receta_key))
-                if r:
-                    r.insertar_ingrediente(nombre, cantidad, descripcion)
-                    self.write("OK")
+            if not tema != "" and pregunta != "" and opc1!="" and opc2=""and opc3="" and respcorrecta="":
+                p=Pregunta()
+                p.get_id()
+                pregunta=Pregunta.query(Pregunta.id_pregunta==user_username).count()
+                if pregunta==0:
+                   p.id_pregunta=p.get_id()
+                   p.tema=preg_tema
+                   p.enunciado=preg_enunciado
+                   p.solucion=respcorrecta
+                   p.respuesta=opc1
+                   p.respuesta2=opc2
+                   p.respuesta3=opc3
+                   u.addpregunta(p)
+                    self.render("errores.html", rol='Usuario', login='no', message='Usuario creado correctamente',)
                 else:
-                    self.write("ERROR")
-            else:
-                self.write("ERROR")
-        except ValueError:
-            self.write(ValueError)
-
-
-class BuscarPregunta(Handler):
-
+                    self.write(render_str("insertarpreguntas.html", rol="Anonimo", login="no") % {"tema" :tema,
+                    "enunciado" : preg_enunciado,
+                    "opc1" : opc1,
+                    "opc2" : opc2,
+                    "opc3" : opc3,
+                    "respcorrecta" : respcorrecta}) p = Pregunta.get_by_id(int(receta_key))
+               
 
 class VisualizarPreguntas(Handler):
     def get(self):
@@ -79,7 +107,7 @@ class RegisterHandler(Handler):
         if rol == "Anonimo":
             self.write("No tienes permiso")
         else:
-            self.render_upload("preguntaformulario.html", rol=rol, login='si')
+            self.render_upload("insertarpreguntas.html", rol=rol, login='si')
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -87,7 +115,7 @@ config['webapp2_extras.sessions'] = {
 }
 
 app = webapp2.WSGIApplication([
-    ('/pregunta/visualizarpreguntas', VisualizarPreguntas),
+    ('/pregunta/addpregunta', AddPregunta),
     ('/iniciosesion', InicioSesion),
     ('/cerrarsesion', CerrarSesion),
     ('/buscar', BuscarPregunta)

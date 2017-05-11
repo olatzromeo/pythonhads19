@@ -56,7 +56,7 @@ class InicioSesion(Handler):
         hex_dig = hash_object.hexdigest()
         
         user=Usuario.query(Usuario.nick==user_username).filter(Usuario.password==hex_dig).get()
-        
+        #Usuario encontrado
         if user:
             self.session['rol'] = user.rol
             self.session['username'] = sani_username

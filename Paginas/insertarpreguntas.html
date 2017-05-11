@@ -17,23 +17,23 @@
             <td><input type="text" name="tema" id="tema" required class="form-input" value="%(tema)s"/></td>
         </tr> 
         <tr>
-            <td><label for="pregunta">Pregunta:</label></td>&nbsp;
-            <td><input type="text" name="pregunta" id="pregunta" required value="%(pregunta)s"/></td>
+            <td><label for="enunciado">Pregunta:</label></td>&nbsp;
+            <td><input type="text" name="enunciado" id="enunciado" required value="%(enunciado)s"/></td>
         </tr>
        
         <tr>
             <td><label for="opcion1">Opcion 1:</label></td>&nbsp;
-            <td><input type="text" name="opc.1" id="opc1" required value="%(opcion1)s"/></td>
+            <td><input type="text" name="opc1" id="opc1" required value="%(opcion1)s"/></td>
         </tr>
        
         <tr>
             <td><label for="opcion2">Opcion 2:</label></td>&nbsp;
-            <td><input type="text" name="opc.2" id="opc2" required value="%(opcion2)s"/></td>
+            <td><input type="text" name="opc2" id="opc2" required value="%(opcion2)s"/></td>
         </tr>
         
         <tr>
             <td><label for="opcion3">Opcion 3:</label></td>&nbsp;
-            <td><input type="text" name="opc.3" id="opc3" required value="%(opcion3)s"/></td>
+            <td><input type="text" name="opc3" id="opc3" required value="%(opcion3)s"/></td>
         </tr>
         
        <!-- <tr>
@@ -56,5 +56,6 @@
         </tr>   
     </table>
 </form>
+<div>%(errores)s</div>
 </div>
   {% endblock %}
