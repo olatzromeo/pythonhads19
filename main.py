@@ -64,6 +64,7 @@ app = webapp2.WSGIApplication([
 	('/', MainHandler),
     ('/iniciosesion', InicioSesionHandler),
     ('/registro', RegistroHandler)
+   #('/insertarpreguntas', InsertarPreguntar)
 ], config=config, debug=True)
 
    

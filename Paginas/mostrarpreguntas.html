@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+
+  {% block content %}
+
+
+<form action="">
+{% for p in preguntas %}
+<div>
+	<label for="Autor">Autor</label>
+	<input type="text" name="autor" readonly/><br>
+	<label for="Tema">Tema</label>
+	<input type="text" name="categoria" readonly/><br>
+	<!--
+	<label for="Solucion">Solucion</label>
+	<input type="text" name="solucion" value="{{p.solucion}}" readonly/><br>
+	-->
+	<label for="Enunciado">Enunciado</label>
+	<input type="text" name="enunciado" readonly/><br>
+	<br>
+	<div>
+  		<input type="radio" name="repsuesta" value="{{p.repsuesta}}" checked>
+  		<input type="radio" name="repsuesta2" value="{{p.repsuesta2}}">
+  		<input type="radio" name="repsuesta3" value="{{p.repsuesta3}}">
+  	</div>
+</div>
+{% endfor %}
+</form>
+
+
+
+  {% endblock %}

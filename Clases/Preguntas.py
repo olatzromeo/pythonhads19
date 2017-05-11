@@ -7,26 +7,28 @@ class Pregunta(ndb.Model):
     # Id del usuario propietario de la pregunta
     id_usuario = ndb.GenericProperty()
 
-    # Id de la categoria a la que pertenece la pregunta
-    id_categoria = ndb.StringProperty()
+    # Id de la pregunta a la que pertenece la pregunta
+    id_pregunta = ndb.StringProperty()
 
-    # Nombre de la pregunta
-    nombre = ndb.StringProperty()
+    # El tema de la pregunta
+    tema = ndb.IntegerProperty()
 
-    # Solucion de la pregunta
+    # Enunciado de la pregunta
+    enunciado = ndb.StringProperty()
+
+    # Solucion de la pregunta (Opcion correcta)
     solucion = ndb.StringProperty()
 
-    # Etiquetas de la pregunta
+    # Opcion 1 de la pregunta
     respuesta = ndb.StringProperty()
 
-    # Clave para buscar la foto
+    # Opcion 2 de la pregunta
     respuesta2 = ndb.BlobKeyProperty()
 
-    # Para controlar el numero de pasos
+    # Opcion 3 de la pregunta
     respuesta3 = ndb.IntegerProperty()
 
-    # Para controlar el numero de votos
-    tema = ndb.IntegerProperty()
+    
 
     def delete(self):
         return self.key.delete()
@@ -37,3 +39,10 @@ class Pregunta(ndb.Model):
     def get_id(self):
 
         return self.key.id()
+
+    """
+        Funcion para insertar una pregunta
+    """
+    def insertar_pregunta(self, id_autor, tema, enunciado,respuesta,respuesta2,respuesta3,respuestacorrecta):
+        p = Pregunta(id_usuario=id_autor,id_pregunta=self.get_id(),tema=tema,enunciado=enunciado,solucion=respuestacorrecta,respuesta=respuesta,respuesta2=respuesta2,respuesta3=respuesta3)
+        p.put()
