@@ -30,61 +30,51 @@ class MainHandler(Handler):
         rol = self.session.get('rol')
 
 
+def escape_html(s):
+    return cgi.escape(s, quote=True)
 
-class AddPregunta(Handler):
-    def get(self, tema="", enunciado="", opc1="", opc2="",opc3="",respcorrecta=""):
 
-        self.write(render_str("insertarpreguntas.html", rol="Anonimo", login="no") % {"tema" :tema,
-        "enunciado" : preg_enunciado,
-        "opc1" : opc1,
-        "opc2" : opc2,
-        "opc3" : opc3,
-        "respcorrecta" : respcorrecta}
-        )
+class InsertarPregunta(Handler):
 
+     def write_form(self, tema="", enunciado="", opcion1="", opcion2="", opcion3="", respcorrecta=""):
+        self.response.write(render_str("insertarpreguntas.html", rol='Usuario', login='si') %  {"tema":tema,"enunciado":enunciado,"opcion1":opcion1,"opcion2":opcion2,"opcion3":opcion3,"respcorrecta":respcorrecta})
+    
+    def get(self):
+         self.write_form()
 
     def post(self):
-
-            preg_tema = self.request.get('tema')
-            preg_enunciado = self.request.get('pregunta')
-            opc1 = self.request.get('opc.1')
-            opc2 = self.request.get('opc.2')
-            opc3 = self.request.get('opc.3')
+            tema = self.request.get('tema')
+            enunciado = self.request.get('enunciado')
+            opcion1 = self.request.get('opcion1')
+            opcion2 = self.request.get('opcion2')
+            opcion3 = self.request.get('opcion3')
             respcorrecta= self.request.get('respcorrecta')
 
-            sani_tema = escape_html(preg_tema)
-            sani_enunciado = escape_html(preg_enunciado)
-            sani_opc1 = escape_html(opc1)
-            sani_opc2 = escape_html(opc2)
-            sani_opc3 = escape_html(opc3)
+            sani_tema = escape_html(tema)
+            sani_enunciado = escape_html(enunciado)
+            sani_opc1 = escape_html(opcion1)
+            sani_opc2 = escape_html(opcion2)
+            sani_opc3 = escape_html(opcion3)
             sani_respcorrecta = escape_html(respcorrecta)
-            errores=""
-
+            
             usuario = self.session.get('username')
             u = Usuario.query(Usuario.nick == usuario).fetch()[0]
            
-            if not tema != "" and pregunta != "" and opc1!="" and opc2=""and opc3="" and respcorrecta="":
+            if tema != "" and enunciado != "" and opcion1!="" and opcion2!=""and opcion3!="" and respcorrecta!="":
                 p=Pregunta()
-                p.get_id()
-                pregunta=Pregunta.query(Pregunta.id_pregunta==user_username).count()
+                p.id_pregunta=p.get_id()
+                pregunta=Pregunta.query(Pregunta.id_pregunta==p.id_pregunta).count()
                 if pregunta==0:
-                   p.id_pregunta=p.get_id()
-                   p.tema=preg_tema
-                   p.enunciado=preg_enunciado
+                   p.tema=tema
+                   p.enunciado=enunciado
                    p.solucion=respcorrecta
-                   p.respuesta=opc1
-                   p.respuesta2=opc2
-                   p.respuesta3=opc3
-                   u.addpregunta(p)
-                    self.render("errores.html", rol='Usuario', login='no', message='Usuario creado correctamente',)
-                else:
-                    self.write(render_str("insertarpreguntas.html", rol="Anonimo", login="no") % {"tema" :tema,
-                    "enunciado" : preg_enunciado,
-                    "opc1" : opc1,
-                    "opc2" : opc2,
-                    "opc3" : opc3,
-                    "respcorrecta" : respcorrecta}) p = Pregunta.get_by_id(int(receta_key))
-               
+                   p.respuesta=opcion1
+                   p.respuesta2=opcion2
+                   p.respuesta3=opcion3
+                   p.addpregunta(p)
+                   self.render("errores.html", rol='Usuario', login='si', message='Pregunta creada correctamente',)
+            else:
+                self.render("errores.html", rol='Usuario', login='si', message='Todos los campos deben de ser rellenados para insertar una nueva pregunta',)
 
 class VisualizarPreguntas(Handler):
     def get(self):
@@ -96,7 +86,7 @@ class VisualizarPreguntas(Handler):
         if not rol:
             rol = "Anonimo"
         preguntas = Preguntas.query().fetch()
-        self.render("mostrarpreguntas.html", rol=rol, login=login, preguntas=preguntas)
+        self.render("visualizarpreguntas.html", rol=rol, login=login, preguntas=preguntas)
 
 
 class RegisterHandler(Handler):
@@ -109,14 +99,14 @@ class RegisterHandler(Handler):
         else:
             self.render_upload("insertarpreguntas.html", rol=rol, login='si')
 
+
 config = {}
 config['webapp2_extras.sessions'] = {
     'secret_key': 'my-super-secret-key',
 }
 
 app = webapp2.WSGIApplication([
-    ('/pregunta/addpregunta', AddPregunta),
+    ('/pregunta/insertarpregunta', InsertarPregunta),
     ('/iniciosesion', InicioSesion),
-    ('/cerrarsesion', CerrarSesion),
-    ('/buscar', BuscarPregunta)
+    ('/cerrarsesion', CerrarSesion)
 ],config=config, debug=True)

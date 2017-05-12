@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+
+{% block preguntas %}
+
+            {% if rol == 'Anonimo' or rol == 'Usuario' or rol == 'Admin'%}
+              <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
+              <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>
+            {% endif %}
+            {% if rol == 'Usuario' or rol == 'Admin'%}
+                 <li><a href="/pregunta/insertarpregunta">Añadir pregunta</a></li>
+                 <li><a href="/pregunta/stored">Guardadas</a></li>
+                 <li><a href="/pregunta/propias">Mis preguntas</a></li>
+            {% endif %}
+            {% if rol == 'Admin' %}
+             <li><a href="/admin">Administración</a></li>
+            {% endif %}
+
+{% endblock %}

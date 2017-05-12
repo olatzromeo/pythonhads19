@@ -54,6 +54,16 @@ class RegistroHandler(Handler):
             rol = "Anonimo"
         self.render("registro.html", rol=rol, login=login)
 
+class PreguntaHandler(Handler):
+      def get(self):
+        usuario = self.session.get('username')
+        rol = self.session.get('rol')
+        login="no"
+        if usuario:
+            login = "si"
+        if not rol:
+            rol = "Anonimo"
+        self.render("preguntas.html", rol=rol, login=login)
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -63,8 +73,9 @@ config['webapp2_extras.sessions'] = {
 app = webapp2.WSGIApplication([  
 	('/', MainHandler),
     ('/iniciosesion', InicioSesionHandler),
-    ('/registro', RegistroHandler)
-   #('/insertarpreguntas', InsertarPreguntar)
+    ('/registro', RegistroHandler),
+    ('/pregunta', PreguntaHandler),
+
 ], config=config, debug=True)
 
    

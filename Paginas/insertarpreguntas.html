@@ -8,46 +8,63 @@
    td { height: 35px; width: 185px; }
    input,select{ height: 25px; width: 195px;}
 </style>
+<script type="text/javascript">
+      function getSelected(){
+        /* Para obtener el valor */
+        var cod = document.getElementById("opciones").selectedIndex.value;
+        var opc1=document.getElementById("opc1").text
+        var opc2=document.getElementById("opc2").text
+        var opc3=document.getElementById("opc3").text
+
+        if (cod==1){
+          document.getElementById("respcorrecta").innerHTML=opc1;
+        }else if (cod==2){
+          document.getElementById("respcorrecta").innerHTML=opc2;
+        }else{
+          document.getElementById("respcorrecta").innerHTML=opc3;
+        }
+      }
+</script>
 <form id='insertarpreguntas' method="post">
 
    
     <table> 
         <tr>
-            <td><label for="tema">Tema:</label></td>&nbsp;
+            <td><label>Tema:</label></td>&nbsp;
             <td><input type="text" name="tema" id="tema" required class="form-input" value="%(tema)s"/></td>
         </tr> 
         <tr>
-            <td><label for="enunciado">Pregunta:</label></td>&nbsp;
+            <td><label>Enunciado de la pregunta:</label></td>&nbsp;
             <td><input type="text" name="enunciado" id="enunciado" required value="%(enunciado)s"/></td>
         </tr>
        
         <tr>
-            <td><label for="opcion1">Opcion 1:</label></td>&nbsp;
-            <td><input type="text" name="opc1" id="opc1" required value="%(opcion1)s"/></td>
+            <td><label>Opcion 1:</label></td>&nbsp;
+            <td><input type="text" name="opcion1" id="opcion1" required value="%(opcion1)s"/></td>
         </tr>
        
         <tr>
-            <td><label for="opcion2">Opcion 2:</label></td>&nbsp;
-            <td><input type="text" name="opc2" id="opc2" required value="%(opcion2)s"/></td>
+            <td><label>Opcion 2:</label></td>&nbsp;
+            <td><input type="text" name="opcion2" id="opcion2" required value="%(opcion2)s"/></td>
         </tr>
         
         <tr>
-            <td><label for="opcion3">Opcion 3:</label></td>&nbsp;
-            <td><input type="text" name="opc3" id="opc3" required value="%(opcion3)s"/></td>
+            <td><label>Opcion 3:</label></td>&nbsp;
+            <td><input type="text" name="opcion3" id="opcion3" required value="%(opcion3)s"/></td>
         </tr>
         
-       <!-- <tr>
-            <td><label for="respuesta">Respuesta Correcta:</label></td>
-            <td><select>
+       <tr>
+            <td><label>Respuesta Correcta:</label></td>
+            <td><select id="opciones" onchange="getSelected();" name="opciones">
                     <option value="1">Opcion1</option>
                     <option value="2">Opcion2</option>
                     <option value="3">Opcion3</option>
                 </select>
             </td>
-        </tr>-->
-        <tr>
-          <td><label for="respuestacorrecta">Respuesta Correcta:</label></td>
-          <td><input type="text" name="respcorrecta" id="respcorrec" required value="%(respcorrecta)s"/></td>
+        </tr>
+        <!--<tr>
+          <td><label for="respuestacorrecta">Respuesta Correcta:</label></td>-->
+          <td><input type="text" name="respcorrecta" id="respcorrecta" required value="%(respcorrecta)s"/></td>
         </tr>
       
         <tr>
@@ -58,4 +75,5 @@
 </form>
 <div>%(errores)s</div>
 </div>
+
   {% endblock %}

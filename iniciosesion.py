@@ -30,8 +30,9 @@ class Handler(BaseHandler):
 class CerrarSesion(Handler):
     def get(self):
         for k in self.session.keys():
+            usuariosesion=self.session[k]
             del self.session[k]
-        self.render("cerrarsesion.html", rol='Anonimo', login='no')
+        self.render("cerrarsesion.html", rol='Anonimo', login='no', message = usuariosesion ,)
 
 class InicioSesion(Handler):
 
