@@ -16,6 +16,9 @@ handlers:
 - url: /images
   static_dir: static/images
 
+- url: /pregunta/.*
+  script: pregunta.app
+
 - url: /registro
   script: registro.app
 

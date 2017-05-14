@@ -2,30 +2,31 @@
 
   {% block content %}
 
-  <h1>Iniciar Sesion</h1>
-  <style>
-    table, th, td {border: hidden; }
-  </style>
-  <form action="/iniciosesion" method="post">
-   <table> 
-    <tr>
-      <td> Nick de usuario :</td> 
-      <td><input name="username" type="text" value="%(username)s"></td>
-      <td>%(username_error)s</td>
-    </tr>
-    <tr>
-     <td> Password </td>
-     <td><input name="passusuario" type="password" value="%(passusuario)s"></td>
-     <td>%(password_error)s</td>
-    </tr>
-    <tr>
-     <td></td>
-     <td><br><input type="submit" value="Iniciar Sesion" style="float: right;"></td>
-    </tr>
-    <tr>
-     <td><br><a href="/registro">Registrate</a></td>
-    </tr>
-   </table>
-  </form> 
+  <div class="container">
+    <div class="row">
+      <div class="col s6 offset-s3 z-depth-1" id="panell">
+            <h4 id="title">Iniciar Sesión</h4>
+              <form action="/iniciosesion" method="post">
+                <div class="input-field" id="username">
+                  <input  type="text" class="validate" name="username" value="%(username)s">
+                  <label for="username">Nick de usuario :</label>
+                  <div class="error"> %(username_error)s </div>
+                </div>
+                <div class="input-field" id="password">
+                  <input  type="password" class="validate" name="passusuario" value="%(passusuario)s">
+                  <label for="password">Password</label>
+                  <div class="error">%(password_error)s</div>
+                </div>
+                <p>
+                  <input class="waves-effect waves-light btn" type="submit" value="Iniciar Sesion" style="float: right;">
+                <br>
+                </p>
+                <a href="/registro">Registrate</a></td>
+              </form>
+            <br>
+          <br>
+      </div>
+    </div>
+  </div>
   
 {% endblock %}

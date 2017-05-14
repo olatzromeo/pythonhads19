@@ -1,25 +1,46 @@
-<!doctype html> 
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta content="text/html; charset=UTF-8"/>
   <title>Inicio</title>
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="stylesheets/css/materialize.min.css"  media="screen,projection"/>
+
 </head>
-<body>
-    <div>
+<body class="white">
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="stylesheets/js/materialize.min.js"></script>
+  
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo"><img src="/images/resized.png"></img> </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        {% if login == 'no' %}
+        <li><a href="/iniciosesion">Iniciar Sesión</a></li>
+        <li><a href="/registro">Registro</a></li>
+        {% else %}
+        <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
+        <li><a href="/pregunta">Preguntas</a></li>
+        {% endif %}
+        <div id="preguntas">{% block preguntas %} {% endblock %}</div>
+      </ul>
+    </div>
+  </nav>
+<div>
+<h3>Bienvenido a QUIZ!</h3>
+<br>
+<br>
+   {% block content %}
+
+   {% endblock %}
+</div>
+ <!--
       <nav>
         <div>
-         <ul>
-            {% if login == 'no' %}
-              <li><a href="/iniciosesion">Iniciar Sesión</a></li>
-              <li><a href="/registro">Registro</a></li>
-            {% else %}
-              <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
-              <li><a href="/pregunta">Preguntas</a></li>
-            {% endif %}
-            <div id="preguntas">{% block preguntas %} {% endblock %}</div>
-                    
-
-          </ul>
+         
           <ul>
             {% if rol == 'Anonimo' or rol == 'Usuario' or rol == 'Admin'%}
               <li><a href="/pregunta/busqueda">Buscar Pregunta</a></li>
@@ -40,8 +61,6 @@
         </div>
       </nav>
     </div>
-        {% block content %}
-
-        {% endblock %}
-
+    -->
+       
 {% extends "footer.html" %}
