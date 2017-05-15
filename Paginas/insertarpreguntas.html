@@ -25,7 +25,7 @@
         }
       }
 </script>
-<form action="/insertarpreguntas" id='insertarpreguntas' method="post">
+<form action="/pregunta/insertarpreguntas" id='insertarpreguntas' method="post">
     <table> 
         <tr>
             <td><label>Tema:</label></td>&nbsp;
@@ -53,16 +53,14 @@
         
        <tr>
             <td><label>Respuesta Correcta:</label></td>
-            <td><select id="opciones" onchange="getSelected();" name="opciones">
+            <td><input type="text" name="respcorrecta" id="respcorrecta" required value="%(respcorrecta)s"/></td>
+
+       <!--     <td><select id="respcorrecta" name="respcorrecta">
                     <option value="1">Opcion1</option>
                     <option value="2">Opcion2</option>
                     <option value="3">Opcion3</option>
                 </select>
-            </td>
-        </tr>
-        <!--<tr>
-          <td><label for="respuestacorrecta">Respuesta Correcta:</label></td>-->
-          <td><input type="text" name="respcorrecta" id="respcorrecta" required value="%(respcorrecta)s"/></td>
+            </td>-->
         </tr>
       
         <tr>
