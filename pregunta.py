@@ -36,10 +36,9 @@ class Handler(BaseHandler):
 
 class InsertarPreguntas(Handler):
 
-	def get(self, tema="", enunciado="", opcion1="", opcion2="", opcion3="", respcorrecta=""):
+	def get(self, tema=" ", enunciado=" ", opcion1=" ", opcion2=" ", opcion3=" ", respcorrecta=" ", errores=""):
 		self.response.write(
-			render_str("insertarpreguntas.html", rol='Usuario', login='si') % {"tema": tema, "enunciado": enunciado,"opcion1": opcion1, "opcion2": opcion2,"opcion3": opcion3,"respcorrecta": respcorrecta})
-
+			render_str("insertarpreguntas.html", rol='Usuario', login='si') % {"tema": tema, "enunciado": enunciado, "opcion1": opcion1, "opcion2": opcion2, "opcion3": opcion3, "respcorrecta": respcorrecta, "errores": errores})
 
 	def post(self):
 
@@ -52,6 +51,7 @@ class InsertarPreguntas(Handler):
 		opcion2 = self.request.get('opcion2')
 		opcion3 = self.request.get('opcion3')
 		respcorrecta = self.request.get('respcorrecta')
+		errores= ""
 		sani_tema = escape_html(tema)
 		sani_enunciado = escape_html(enunciado)
 		sani_opc1 = escape_html(opcion1)
@@ -68,7 +68,6 @@ class InsertarPreguntas(Handler):
 			pregunta = Pregunta.query(Pregunta.id_pregunta == p.id_pregunta).count()
 			if  pregunta == 0:'''
 			p.tema = tema
-
 			p.id_pregunta = self.request.get('id')
 			p.id_usuario = u.get_id()
 			p.enunciado = enunciado
@@ -81,9 +80,9 @@ class InsertarPreguntas(Handler):
 			self.render("errores.html", rol='Usuario', login='si', message='Pregunta creada correctamente', )
 
 		else:
-			self.render("errores.html", rol='Usuario', login='si',
-            	message='Todos los campos deben de ser rellenados para insertar una nueva pregunta', )
-
+			self.write(render_str("insertarpreguntas.html",rol='Usuario', login='si') % {"tema": sani_tema, "enunciado": sani_enunciado,"opcion1": sani_opc1, "opcion2": sani_opc2,"opcion3": sani_opc3,"respcorrecta": sani_respcorrecta,
+            "errores" : "Todos los campos deben de ser rellenados para insertar una nueva pregunta"})
+		
 '''class VisualizarPreguntas(Handler):
 	def get(self):
 		login = "no"
@@ -114,7 +113,7 @@ config['webapp2_extras.sessions'] = {
 }
 
 app = webapp2.WSGIApplication([
-    ('/pregunta/insertarpreguntas', InsertarPreguntas),
+    ('/pregunta/insertarpreguntas', InsertarPreguntas)
     # ('/pregunta/crear', RegisterHandler),
     #('/iniciosesion', InicioSesion),
     #('/cerrarsesion', CerrarSesion)

@@ -5,8 +5,9 @@
 <div>
 <h1>Insertar Preguntas</h1>
 <style>
-   td { height: 35px; width: 185px; }
-   input,select{ height: 25px; width: 195px;}
+   td,label { height: 20px; width: 135px; font-size: 20px; color: black;}
+   input,select{ height: 25px; width: 195px;font-size: 18px;}
+
 </style>
 <script type="text/javascript">
       function getSelected(){
@@ -26,34 +27,34 @@
       }
 </script>
 <form action="/pregunta/insertarpreguntas" id='insertarpreguntas' method="post">
-    <table> 
+      <table> 
         <tr>
             <td><label>Tema:</label></td>&nbsp;
-            <td><input type="text" name="tema" id="tema" required class="form-input" value="%(tema)s"/></td>
+            <td><input type="text" name="tema" id="tema" class="form-input" required="" value="%(tema)s"/></td>
         </tr> 
         <tr>
             <td><label>Enunciado de la pregunta:</label></td>&nbsp;
-            <td><input type="text" name="enunciado" id="enunciado" required value="%(enunciado)s"/></td>
+            <td><input type="text" name="enunciado" id="enunciado" required="" value="%(enunciado)s"/></td>
         </tr>
        
         <tr>
             <td><label>Opcion 1:</label></td>&nbsp;
-            <td><input type="text" name="opcion1" id="opcion1" required value="%(opcion1)s"/></td>
+            <td><input type="text" name="opcion1" id="opcion1" required="" value="%(opcion1)s"/></td>
         </tr>
        
         <tr>
             <td><label>Opcion 2:</label></td>&nbsp;
-            <td><input type="text" name="opcion2" id="opcion2" required value="%(opcion2)s"/></td>
+            <td><input type="text" name="opcion2" id="opcion2" required="" value="%(opcion2)s"/></td>
         </tr>
         
         <tr>
             <td><label>Opcion 3:</label></td>&nbsp;
-            <td><input type="text" name="opcion3" id="opcion3" required value="%(opcion3)s"/></td>
+            <td><input type="text" name="opcion3" id="opcion3" required="" value="%(opcion3)s"/></td>
         </tr>
         
        <tr>
             <td><label>Respuesta Correcta:</label></td>
-            <td><input type="text" name="respcorrecta" id="respcorrecta" required value="%(respcorrecta)s"/></td>
+            <td><input type="text" name="respcorrecta" id="respcorrecta"  value="%(respcorrecta)s"/></td>
 
        <!--     <td><select id="respcorrecta" name="respcorrecta">
                     <option value="1">Opcion1</option>
@@ -65,11 +66,11 @@
       
         <tr>
             <td><td>
-            <td><button  type="submit" name="boton" id="insertar" style="align: right">Insertar Pregunta</button><td>
+            <td><button class="btn" type="submit" name="boton" id="insertar" style="align: right">Insertar Pregunta</button><td>
         </tr>   
     </table>
 </form>
-<div>%(errores)s</div>
+<div class="error">%(errores)s</div>
 </div>
 
   {% endblock %}

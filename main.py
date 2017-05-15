@@ -63,7 +63,7 @@ class PreguntaHandler(Handler):
             login = "si"
         if not rol:
             rol = "Anonimo"
-        self.render("insertarpreguntas.html", rol=rol, login=login)
+        self.render("preguntas.html", rol=rol, login=login)
 
 config = {}
 config['webapp2_extras.sessions'] = {
