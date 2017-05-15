@@ -1,76 +1,79 @@
 {% extends "main.html" %}
 
   {% block content %}
-
-<div>
-<h1>Insertar Preguntas</h1>
 <style>
-   td,label { height: 20px; width: 135px; font-size: 20px; color: black;}
-   input,select{ height: 25px; width: 195px;font-size: 18px;}
-
+  label{ font-size: 17px; }
 </style>
-<script type="text/javascript">
-      function getSelected(){
-        /* Para obtener el valor */
-        var cod = document.getElementById("opciones").selectedIndex.value;
-        var opc1=document.getElementById("opcion1").text
-        var opc2=document.getElementById("opcion2").text
-        var opc3=document.getElementById("opcion3").text
-
-        if (cod==1){
-          document.getElementById("respcorrecta").innerHTML=opc1;
-        }else if (cod==2){
-          document.getElementById("respcorrecta").innerHTML=opc2;
-        }else{
-          document.getElementById("respcorrecta").innerHTML=opc3;
-        }
-      }
-</script>
-<form action="/pregunta/insertarpreguntas" id='insertarpreguntas' method="post">
-      <table> 
-        <tr>
-            <td><label>Tema:</label></td>&nbsp;
-            <td><input type="text" name="tema" id="tema" class="form-input" required="" value="%(tema)s"/></td>
-        </tr> 
-        <tr>
-            <td><label>Enunciado de la pregunta:</label></td>&nbsp;
-            <td><input type="text" name="enunciado" id="enunciado" required="" value="%(enunciado)s"/></td>
-        </tr>
-       
-        <tr>
-            <td><label>Opcion 1:</label></td>&nbsp;
-            <td><input type="text" name="opcion1" id="opcion1" required="" value="%(opcion1)s"/></td>
-        </tr>
-       
-        <tr>
-            <td><label>Opcion 2:</label></td>&nbsp;
-            <td><input type="text" name="opcion2" id="opcion2" required="" value="%(opcion2)s"/></td>
-        </tr>
+ <!-- Page Layout here -->
+    <div class="row">
+      <div class="col s2 ">
+        <!-- Grey navigation panel -->
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          {% if login == 'no' %}
+          <li><a href="/iniciosesion">Iniciar Sesión</a></li>
+          <li><a href="/registro">Registro</a></li>
+          {% else %}
+          <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
+          <li><a href="/pregunta">Preguntas</a></li>
+          {% endif %}
+          <div id="preguntas">{% block preguntas %} {% endblock %}</div>
+      </ul>
+      </div>
+      <div class="col s1">
+      </div>
+      <div class="col s6 ">
+        <!-- Teal page content  -->
+        <h4>Insertar Preguntas</h4>
+        <br>
+        <br>
+        <form action="/pregunta/insertarpreguntas" id='insertarpreguntas' method="post">
+             
+            <div class="input-field">
+                <input type="text" name="tema" id="tema" class="validate" value="%(tema)s"/>
+                <label for="tema">Tema:</label>
+            </div>
+            <div class="input-field">
+                <input type="text" name="enunciado" id="enunciado" required="" value="%(enunciado)s"/>
+                <label for="enunciado" >Enunciado de la pregunta:</label>
+            </div>
+            <div class="input-field">
+                <input type="text" name="opcion1" id="opcion1" required="" value="%(opcion1)s"/>
+                 <label for="opcion1">Opcion 1:</label>
+            </div>
+            <div class="input-field">
+                <input type="text" name="opcion2" id="opcion2" required="" value="%(opcion2)s"/>
+                <label for="opcion2">Opcion 2:</label>
+            </div>
+            <div class="input-field">
+                <input type="text" name="opcion3" id="opcion3" required="" value="%(opcion3)s"/>
+                <label for="opcion3">Opcion 3:</label>
+            </div>
+            <div class="input-field">
+                <input type="text" name="respcorrecta" id="respcorrecta"  value="%(respcorrecta)s"/>
+                <label for="respcorrecta">Respuesta Correcta:</label>
+            </div>
+            <br>
+            <br>
+            <br>
+            <button class="btn" type="submit" name="boton" id="insertar" style="float: right">Insertar Pregunta</button><td>
+            <br>
+            <br>
+            <br>
+            <br>
+        </form>
         
-        <tr>
-            <td><label>Opcion 3:</label></td>&nbsp;
-            <td><input type="text" name="opcion3" id="opcion3" required="" value="%(opcion3)s"/></td>
-        </tr>
-        
-       <tr>
-            <td><label>Respuesta Correcta:</label></td>
-            <td><input type="text" name="respcorrecta" id="respcorrecta"  value="%(respcorrecta)s"/></td>
+      </div>
 
-       <!--     <td><select id="respcorrecta" name="respcorrecta">
-                    <option value="1">Opcion1</option>
-                    <option value="2">Opcion2</option>
-                    <option value="3">Opcion3</option>
-                </select>
-            </td>-->
-        </tr>
-      
-        <tr>
-            <td><td>
-            <td><button class="btn" type="submit" name="boton" id="insertar" style="align: right">Insertar Pregunta</button><td>
-        </tr>   
-    </table>
-</form>
-<div class="error">%(errores)s</div>
+    </div>
+
+<div class="container">
+    <div class="row">
+      <div class="col s6 offset-s3 z-depth-1" id="panell">
+     
 </div>
+</div>
+</div>
+<div class="error">%(errores)s</div>
+
 
   {% endblock %}

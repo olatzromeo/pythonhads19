@@ -9,33 +9,48 @@
   <link type="text/css" rel="stylesheet" href="/stylesheets/css/materialize.min.css"  media="screen,projection"/>
 
 </head>
-<body class="white">
-  <!--Import jQuery before materialize.js-->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="/stylesheets/js/materialize.min.js"></script>
-  
-  <nav>
-    <div class="nav-wrapper teal" >
-      <a href="#" class="brand-logo"><img src="/images/resized.png"></img> </a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        {% if login == 'no' %}
-        <li><a href="/iniciosesion">Iniciar Sesión</a></li>
-        <li><a href="/registro">Registro</a></li>
-        {% else %}
-        <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
-        <li><a href="/pregunta">Preguntas</a></li>
-        {% endif %}
-        <div id="preguntas">{% block preguntas %} {% endblock %}</div>
-      </ul>
-    </div>
-  </nav>
-<div>
-<h3>Bienvenido a QUIZ!</h3>
-<br>
-   {% block content %}
+<style>
+    body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
 
-   {% endblock %}
-</div>
+  main {
+    flex: 1 0 auto;
+  }
+</style>
+
+<body class="white">
+  <header>  
+  <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/stylesheets/js/materialize.min.js"></script>
+
+    <nav>
+      <div class="nav-wrapper teal" >
+        <a href="/" class="brand-logo"><img class="responsive-img" src="/images/resized.png"></img></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          {% if login == 'no' %}
+          <li><a href="/iniciosesion">Iniciar Sesión</a></li>
+          <li><a href="/registro">Registro</a></li>
+          {% else %}
+          <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
+          <li><a href="/pregunta">Preguntas</a></li>
+          {% endif %}
+          <div id="preguntas">{% block preguntas %} {% endblock %}</div>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div>
+    <br>
+     {% block content %}
+
+     {% endblock %}
+    </div>
+  </main>
  <!--
       <nav>
         <div>

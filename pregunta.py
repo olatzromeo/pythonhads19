@@ -65,7 +65,7 @@ class InsertarPreguntas(Handler):
 		if tema != "" and enunciado != "" and opcion1 != "" and opcion2 != "" and opcion3 != "" and respcorrecta != "":
 			p = Pregunta()
 			'''p.id_pregunta = p.get_id()
-			pregunta = Pregunta.query(Pregunta.id_pregunta == p.id_pregunta).count()
+			pregunta = Preguntas.query(Pregunta.id_pregunta == p.id_pregunta).count()
 			if  pregunta == 0:'''
 			p.tema = tema
 			p.id_pregunta = self.request.get('id')

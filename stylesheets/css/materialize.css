@@ -26,7 +26,6 @@
 .materialize-red-text.text-lighten-4 {
   color: #f8c1c3 !important;
 }
-
 .materialize-red.lighten-3 {
   background-color: #f3989b !important;
 }
@@ -4438,7 +4437,7 @@ html {
 
 @media only screen and (min-width: 0) {
   html {
-    font-size: 14px;
+    font-size: 17px;
   }
 }
 
