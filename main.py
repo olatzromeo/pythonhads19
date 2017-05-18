@@ -30,7 +30,7 @@ class MainHandler(Handler):
             login="si"
         if not rol:
             rol="Anonimo"
-        self.render("main.html", rol=rol, login=login)
+        self.render("index.html", rol=rol, login=login)
 
 class InicioSesionHandler(Handler):
     def get(self):

@@ -15,7 +15,6 @@
     min-height: 100vh;
     flex-direction: column;
   }
-
   main {
     flex: 1 0 auto;
   }
@@ -34,9 +33,15 @@
           {% if login == 'no' %}
           <li><a href="/iniciosesion">Iniciar Sesión</a></li>
           <li><a href="/registro">Registro</a></li>
+          {% elif rol == 'Anonimo' %}
+          <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
+          <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
+          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>  
           {% else %}
           <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
-          <li><a href="/pregunta">Preguntas</a></li>
+          <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
+          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li> 
+          <li><a href="/pregunta/insertarpreguntas">Añadir pregunta</a></li>
           {% endif %}
           <div id="preguntas">{% block preguntas %} {% endblock %}</div>
         </ul>

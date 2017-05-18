@@ -13,8 +13,15 @@
           <li><a href="/iniciosesion">Iniciar Sesión</a></li>
           <li><a href="/registro">Registro</a></li>
           {% else %}
-          <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
-          <li><a href="/pregunta">Preguntas</a></li>
+            {% if rol == 'Anonimo' or rol == 'Usuario' or rol == 'Admin'%}
+              <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
+              <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>
+              {% else %}
+
+            {% endif %}
+          <!--<li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
+          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>-->
+
           {% endif %}
           <div id="preguntas">{% block preguntas %} {% endblock %}</div>
       </ul>
@@ -50,13 +57,12 @@
             </div>
             <div class="input-field">
                 <input type="text" name="respcorrecta" id="respcorrecta"  value="%(respcorrecta)s"/>
-                <label for="respcorrecta">Respuesta Correcta:</label>
+                <label for="respcorrecta">¿Cúal de las tres es la respuesta correcta? Escriba de nuevo la respuesta</label>
             </div>
             <br>
             <br>
             <br>
             <button class="btn" type="submit" name="boton" id="insertar" style="float: right">Insertar Pregunta</button><td>
-            <br>
             <br>
             <br>
             <br>
