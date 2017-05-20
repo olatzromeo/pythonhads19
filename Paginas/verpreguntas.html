@@ -1,0 +1,57 @@
+{% extends "main.html" %}
+
+{% block content %}
+<script type="text/javascript">
+    
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+            
+</script>
+<div class="container">
+    <div class="section">
+
+        <!--   Icon Section   -->
+        <div class="row">
+            {% for p in preguntas %}
+
+            <div class="col s12 m4">
+               
+                        <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: {{p.enunciado}}</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">a)	{{p.respuesta}}</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">b)	{{p.respuesta2}}</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">c)	{{p.respuesta3}}</span>
+    <div class="input-field col s12">
+    <select>
+      <option value="0" >Elige una respuesta</option>
+      <option value="1">a)</option>
+      <option value="2">b)</option>
+      <option value="3">c)</option>
+    </select>
+    <label>Respuesta</label>
+  </div>
+                       <!-- <div>Respuesta correcta <select name="correcta">
+                                      <option value="A">A</option>
+                                      <option value="B">B</option>
+                                      <option value="C">C</option></select>
+                                      </div>
+-->
+                   
+                    
+            </div>
+            {% endfor %}
+
+
+        </div>
+
+
+
+    </div>
+    <br><br>
+
+    <div class="section">
+
+    </div>
+</div>
+
+{% endblock %}

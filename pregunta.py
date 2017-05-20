@@ -82,6 +82,18 @@ class InsertarPreguntas(Handler):
 		else:
 			self.write(render_str("insertarpreguntas.html",rol='Usuario', login='si') % {"tema": sani_tema, "enunciado": sani_enunciado,"opcion1": sani_opc1, "opcion2": sani_opc2,"opcion3": sani_opc3,"respcorrecta": sani_respcorrecta,
             "errores" : "Todos los campos deben de ser rellenados para insertar una nueva pregunta"})
+
+class PreguntasAllHandler(Handler):
+    def get(self):
+        login = "no"
+        usuario = self.session.get('username')
+        rol = self.session.get('rol')
+        if usuario:
+            login = "si"
+        if not rol:
+            rol = "Anonimo"
+        preguntas = Pregunta.query().fetch()
+        self.render("verpreguntas.html", rol=rol, login=login, preguntas=preguntas)
 		
 '''class VisualizarPreguntas(Handler):
 	def get(self):
@@ -113,7 +125,8 @@ config['webapp2_extras.sessions'] = {
 }
 
 app = webapp2.WSGIApplication([
-    ('/pregunta/insertarpreguntas', InsertarPreguntas)
+	('/pregunta/insertarpreguntas', InsertarPreguntas),
+	('/pregunta/visualizarpreguntas', PreguntasAllHandler)
     # ('/pregunta/crear', RegisterHandler),
     #('/iniciosesion', InicioSesion),
     #('/cerrarsesion', CerrarSesion)

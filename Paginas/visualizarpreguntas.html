@@ -24,6 +24,16 @@
 	<input type="text" name="autor" readonly/><br>
 	<label for="Tema">Tema</label>
 	<input type="text" name="categoria" readonly/><br>
+  <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: {{p.enunciado}}</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">a)  {{p.respuesta}}</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">b)  {{p.respuesta2}}</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">c)  {{p.respuesta3}}</span>
+                        <div>Respuesta correcta <select name="correcta">
+                                      <option value="A">A</option>
+                                      <option value="B">B</option>
+                                      <option value="C">C</option></select>
+                                      </div>
+
 	<!--
 	<label for="Solucion">Solucion</label>
 	<input type="text" name="solucion" value="{{p.solucion}}" readonly/><br>
