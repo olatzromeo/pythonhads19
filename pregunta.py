@@ -95,6 +95,59 @@ class PreguntasAllHandler(Handler):
         preguntas = Pregunta.query().fetch()
         self.render("verpreguntas.html", rol=rol, login=login, preguntas=preguntas)
 		
+class BusquedaHandler(Handler):
+    def get(self):
+        login = "no"
+        usuario = self.session.get('username')
+        rol = self.session.get('rol')
+        if usuario:
+            login = "si"
+        if not rol:
+            rol = "Anonimo"
+        preguntas=[]
+        self.render("busqueda.html", rol=rol, login=login, preguntas=preguntas)
+
+    def post(self):
+
+        buscar = self.request.get('buscar')
+
+        print("este es el buscar :"+buscar)
+        if buscar:
+            preguntas = buscar_preguntas(buscar)
+        else:
+            preguntas = []
+
+        respuesta = ""
+        pregunta_card = '''
+            <div class="col s12 m4">
+               
+                        <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: %(enunciado)s</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">a)	%(respuesta)s</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">b)	%(respuesta2)s</span>
+                        <span class="card-title activator grey-text text-darken-4 truncate">c)	%(respuesta3)s</span>
+    <div class="input-field col s12">
+    <select>
+      <option value="0" >Elige una respuesta</option>
+      <option value="1">a)</option>
+      <option value="2">b)</option>
+      <option value="3">c)</option>
+    </select>
+    <label>Respuesta</label>
+  </div>'''
+
+        for p in preguntas:
+            respuesta += pregunta_card % {"enunciado" :p.enunciado, "respuesta" : p.respuesta, "respuesta2": p.respuesta2, "respuesta3": p.respuesta3}
+
+        self.response.out.write(respuesta)
+
+def buscar_preguntas(busqueda):
+    resultado = []
+    preguntas = Pregunta.query().fetch()
+    for p in preguntas:
+        if p.tema in busqueda:
+            #print(r.enunciado)
+            resultado.append(r)
+    return resultado
 '''class VisualizarPreguntas(Handler):
 	def get(self):
 		login = "no"
@@ -126,7 +179,8 @@ config['webapp2_extras.sessions'] = {
 
 app = webapp2.WSGIApplication([
 	('/pregunta/insertarpreguntas', InsertarPreguntas),
-	('/pregunta/visualizarpreguntas', PreguntasAllHandler)
+	('/pregunta/visualizarpreguntas', PreguntasAllHandler),
+	('/pregunta/busqueda', BusquedaHandler)
     # ('/pregunta/crear', RegisterHandler),
     #('/iniciosesion', InicioSesion),
     #('/cerrarsesion', CerrarSesion)

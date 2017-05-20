@@ -55,10 +55,15 @@
                 <input type="text" name="opcion3" id="opcion3" required="" value="%(opcion3)s"/>
                 <label for="opcion3">Opcion 3:</label>
             </div>
-            <div class="input-field">
-                <input type="text" name="respcorrecta" id="respcorrecta"  value="%(respcorrecta)s"/>
-                <label for="respcorrecta">¿Cúal de las tres es la respuesta correcta? Escriba de nuevo la respuesta</label>
-            </div>
+                         <div class="input-field col s12">
+    <select id="respcorrecta" name="respcorrecta">
+      <option value="0" >Elige una respuesta</option>
+      <option value="1">a)</option>
+      <option value="2">b)</option>
+      <option value="3">c)</option>
+    </select>
+    <label>Respuesta</label>
+  </div>
             <br>
             <br>
             <br>
@@ -80,6 +85,12 @@
 </div>
 </div>
 <div class="error">%(errores)s</div>
-
+<script type="text/javascript">
+    
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+            
+</script>
 
   {% endblock %}
