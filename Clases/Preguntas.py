@@ -9,6 +9,9 @@ class Pregunta(ndb.Model):
 
     # Id de la pregunta a la que pertenece la pregunta
     id_pregunta = ndb.StringProperty()
+    
+    # Nombre del autor de la pregunta
+    autor = ndb.StringProperty()
 
     # El tema de la pregunta
     tema = ndb.StringProperty()
@@ -42,8 +45,8 @@ class Pregunta(ndb.Model):
     """
         Funcion para insertar una pregunta
     """
-    def insertar_pregunta(self, id_autor, tema, enunciado,respuesta,respuesta2,respuesta3,respuestacorrecta):
-        p = Pregunta(id_usuario=id_autor,id_pregunta=self.get_id(),tema=tema,enunciado=enunciado,solucion=respuestacorrecta,respuesta=respuesta,respuesta2=respuesta2,respuesta3=respuesta3)
+    def insertar_pregunta(self, id_autor, nombre_autor,tema, enunciado,respuesta,respuesta2,respuesta3,respuestacorrecta):
+        p = Pregunta(id_usuario=id_autor,id_pregunta=self.get_id(),autor=nombre_autor, tema=tema,enunciado=enunciado,solucion=respuestacorrecta,respuesta=respuesta,respuesta2=respuesta2,respuesta3=respuesta3)
         p.put()
 
     def add_pregunta(self, pregunta):

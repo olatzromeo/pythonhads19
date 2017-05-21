@@ -10,48 +10,23 @@
 </script>
 <div class="container">
     <div class="section">
-
         <!--   Icon Section   -->
         <div class="row">
             {% for p in preguntas %}
-
-            <div class="col s12 m4">
-               
-                        <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: {{p.enunciado}}</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">a)	{{p.respuesta}}</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">b)	{{p.respuesta2}}</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">c)	{{p.respuesta3}}</span>
-    <div class="input-field col s12">
-    <select>
-      <option value="0" >Elige una respuesta</option>
-      <option value="1">a)</option>
-      <option value="2">b)</option>
-      <option value="3">c)</option>
-    </select>
-    <label>Respuesta</label>
-  </div>
-                       <!-- <div>Respuesta correcta <select name="correcta">
-                                      <option value="A">A</option>
-                                      <option value="B">B</option>
-                                      <option value="C">C</option></select>
-                                      </div>
--->
-                   
-                    
+            <div class="card-panel blue lighten-3 col s12 m12">
+                <span style="font-size: 16px; font-weight: bold;">Autor:</span>&nbsp;{{p.autor}}<br/>
+                <span style="font-size: 16px; font-weight: bold;">Tema:</span></span>&nbsp;{{p.tema}}<br/>
+                <span style="font-size: 16px; font-weight: bold;">Enunciado: </span>&nbsp;<span>{{p.enunciado}}</span><br/>
+                <p style="font-size: 16px; font-weight: bold;">Opciones</p>
+                  <p>a)	{{p.respuesta}}</p>
+                  <p>b)	{{p.respuesta2}}</p>
+                  <p>c)	{{p.respuesta3}}</p>
+                <span style="font-size: 16px; font-weight: bold;"> Respuesta Correcta</span>&nbsp;<span> {{p.solucion}}</span><br/>
             </div>
             {% endfor %}
-
-
         </div>
-
-
-
     </div>
     <br><br>
-
-    <div class="section">
-
-    </div>
 </div>
 
 {% endblock %}

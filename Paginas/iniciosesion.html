@@ -8,11 +8,13 @@
             <h4 id="title">Iniciar Sesión</h4>
               <form action="/iniciosesion" method="post">
                 <div class="input-field" id="username">
+                 <i class="material-icons prefix">account_circle</i>
                  <input  type="text" class="validate" name="username" value="%(username)s">
                   <label for="username">Nick de usuario</label>
                   <div style="color:#FF0000;"> %(username_error)s </div>
                 </div>
                 <div class="input-field" id="password">
+                 <i class="material-icons prefix">lock_outline</i>
                   <input  type="password" class="validate" name="passusuario" value="%(passusuario)s">
                   <label for="password">Password</label>
                   <div style="color:#FF0000;">%(password_error)s</div>

@@ -29,58 +29,61 @@ class Handler(BaseHandler):
 
 
 '''class MainHandler(Handler):
-	def get(self):
-		usuario = self.session.get('username')
-		rol = self.session.get('rol')'''
+    def get(self):
+        usuario = self.session.get('username')
+        rol = self.session.get('rol')'''
 
 
 class InsertarPreguntas(Handler):
 
-	def get(self, tema=" ", enunciado=" ", opcion1=" ", opcion2=" ", opcion3=" ", respcorrecta=" ", errores=""):
-		self.response.write(
-			render_str("insertarpreguntas.html", rol='Usuario', login='si') % {"tema": tema, "enunciado": enunciado, "opcion1": opcion1, "opcion2": opcion2, "opcion3": opcion3, "respcorrecta": respcorrecta, "errores": errores})
+    def get(self, autor="", tema=" ", enunciado=" ", opcion1=" ", opcion2=" ", opcion3=" ", respcorrecta=" ", errores=""):
+        self.response.write(
+            render_str("insertarpreguntas.html", rol='Usuario', login='si') % {"autor": autor, "tema": tema, "enunciado": enunciado, "opcion1": opcion1, "opcion2": opcion2, "opcion3": opcion3, "respcorrecta": respcorrecta, "errores": errores})
 
-	def post(self):
+    def post(self):
 
-		def escape_html(s):
-			return cgi.escape(s, quote=True)
+        def escape_html(s):
+            return cgi.escape(s, quote=True)
 
-		tema = self.request.get('tema')
-		enunciado = self.request.get('enunciado')
-		opcion1 = self.request.get('opcion1')
-		opcion2 = self.request.get('opcion2')
-		opcion3 = self.request.get('opcion3')
-		respcorrecta = self.request.get('respcorrecta')
-		errores= ""
-		sani_tema = escape_html(tema)
-		sani_enunciado = escape_html(enunciado)
-		sani_opc1 = escape_html(opcion1)
-		sani_opc2 = escape_html(opcion2)
-		sani_opc3 = escape_html(opcion3)
-		sani_respcorrecta = escape_html(respcorrecta)
+        autor=self.session.get('username')
+        tema = self.request.get('tema')
+        enunciado = self.request.get('enunciado')
+        opcion1 = self.request.get('opcion1')
+        opcion2 = self.request.get('opcion2')
+        opcion3 = self.request.get('opcion3')
+        respcorrecta = self.request.get('respcorrecta')
+        errores= ""
+        sani_autor=escape_html(autor)
+        sani_tema = escape_html(tema)
+        sani_enunciado = escape_html(enunciado)
+        sani_opc1 = escape_html(opcion1)
+        sani_opc2 = escape_html(opcion2)
+        sani_opc3 = escape_html(opcion3)
+        sani_respcorrecta = escape_html(respcorrecta)
 
-		usuario = self.session.get('username')
-		u = Usuario.query(Usuario.nick == usuario).fetch()[0]
+        usuario = self.session.get('username')
+        u = Usuario.query(Usuario.nick == usuario).fetch()[0]
 
-		if tema != "" and enunciado != "" and opcion1 != "" and opcion2 != "" and opcion3 != "" and respcorrecta != "":
-			p = Pregunta()
-			'''p.id_pregunta = p.get_id()
-			pregunta = Preguntas.query(Pregunta.id_pregunta == p.id_pregunta).count()
-			if  pregunta == 0:'''
-			p.tema = tema
-			p.id_pregunta = self.request.get('id')
-			p.id_usuario = u.get_id()
-			p.enunciado = enunciado
-			p.solucion = respcorrecta
-			p.respuesta = opcion1
-			p.respuesta2 = opcion2
-			p.respuesta3 = opcion3
-			p.put()
-			#p.add_pregunta(p)
-			self.render("errores.html", rol='Usuario', login='si', message='Pregunta creada correctamente', )
+        if tema != "" and enunciado != "" and opcion1 != "" and opcion2 != "" and opcion3 != "" and respcorrecta != "":
+            p = Pregunta()
+            '''p.id_pregunta = p.get_id()
+            pregunta = Preguntas.query(Pregunta.id_pregunta == p.id_pregunta).count()
+            if  pregunta == 0:'''
+            p.tema = tema
+            p.autor=autor
+            p.id_pregunta = self.request.get('id')
+            p.id_usuario = u.get_id()
+            p.enunciado = enunciado
+            p.solucion = respcorrecta
+            p.respuesta = opcion1
+            p.respuesta2 = opcion2
+            p.respuesta3 = opcion3
+            p.put()
+            #p.add_pregunta(p)
+            self.render("errores.html", rol='Usuario', login='si', message='Pregunta creada correctamente', )
 
-		else:
-			self.write(render_str("insertarpreguntas.html",rol='Usuario', login='si') % {"tema": sani_tema, "enunciado": sani_enunciado,"opcion1": sani_opc1, "opcion2": sani_opc2,"opcion3": sani_opc3,"respcorrecta": sani_respcorrecta,
+        else:
+            self.write(render_str("insertarpreguntas.html",rol='Usuario', login='si') % { "autor": autor, "tema": sani_tema, "enunciado": sani_enunciado,"opcion1": sani_opc1, "opcion2": sani_opc2,"opcion3": sani_opc3,"respcorrecta": sani_respcorrecta,
             "errores" : "Todos los campos deben de ser rellenados para insertar una nueva pregunta"})
 
 class PreguntasAllHandler(Handler):
@@ -94,7 +97,7 @@ class PreguntasAllHandler(Handler):
             rol = "Anonimo"
         preguntas = Pregunta.query().fetch()
         self.render("verpreguntas.html", rol=rol, login=login, preguntas=preguntas)
-		
+        
 class BusquedaHandler(Handler):
     def get(self):
         login = "no"
@@ -121,19 +124,20 @@ class BusquedaHandler(Handler):
         pregunta_card = '''
             <div class="col s12 m4">
                
-                        <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: %(enunciado)s</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">a)	%(respuesta)s</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">b)	%(respuesta2)s</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">c)	%(respuesta3)s</span>
-    <div class="input-field col s12">
-    <select>
-      <option value="0" >Elige una respuesta</option>
-      <option value="1">a)</option>
-      <option value="2">b)</option>
-      <option value="3">c)</option>
-    </select>
-    <label>Respuesta</label>
-  </div>'''
+                <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: %(enunciado)s</span>
+                <span class="card-title activator grey-text text-darken-4 truncate">a)  %(respuesta)s</span>
+                <span class="card-title activator grey-text text-darken-4 truncate">b)  %(respuesta2)s</span>
+                <span class="card-title activator grey-text text-darken-4 truncate">c)  %(respuesta3)s</span>
+                <div class="input-field col s12">
+                    <select>
+                        <option value="0" >Elige una respuesta</option>
+                        <option value="1">a)</option>
+                        <option value="2">b)</option>
+                        <option value="3">c)</option>
+                    </select>
+                <label>Respuesta</label>
+                </div>
+             </div>'''
 
         for p in preguntas:
             respuesta += pregunta_card % {"enunciado" :p.enunciado, "respuesta" : p.respuesta, "respuesta2": p.respuesta2, "respuesta3": p.respuesta3}
@@ -149,16 +153,16 @@ def buscar_preguntas(busqueda):
             resultado.append(r)
     return resultado
 '''class VisualizarPreguntas(Handler):
-	def get(self):
-		login = "no"
-		usuario = self.session.get('username')
-		rol = self.session.get('rol')
-		if usuario:
-			login = "si"
-		if not rol:
-			rol = "Anonimo"
-		preguntas = Preguntas.query().fetch()
-		self.render("visualizarpreguntas.html", rol=rol, login=login, preguntas=preguntas)'''
+    def get(self):
+        login = "no"
+        usuario = self.session.get('username')
+        rol = self.session.get('rol')
+        if usuario:
+            login = "si"
+        if not rol:
+            rol = "Anonimo"
+        preguntas = Preguntas.query().fetch()
+        self.render("visualizarpreguntas.html", rol=rol, login=login, preguntas=preguntas)'''
 
 '''
 class RegisterHandler(Handler):
@@ -178,9 +182,9 @@ config['webapp2_extras.sessions'] = {
 }
 
 app = webapp2.WSGIApplication([
-	('/pregunta/insertarpreguntas', InsertarPreguntas),
-	('/pregunta/visualizarpreguntas', PreguntasAllHandler),
-	('/pregunta/busqueda', BusquedaHandler)
+    ('/pregunta/insertarpreguntas', InsertarPreguntas),
+    ('/pregunta/visualizarpreguntas', PreguntasAllHandler),
+    ('/pregunta/busqueda', BusquedaHandler)
     # ('/pregunta/crear', RegisterHandler),
     #('/iniciosesion', InicioSesion),
     #('/cerrarsesion', CerrarSesion)

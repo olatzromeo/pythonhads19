@@ -16,7 +16,7 @@ function busquedaAJAX(){
 <div class="container">
     <div class="section ">
         <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s8">
               <form method="post">
                   <i class="material-icons prefix">search</i>
               <input type="text" name="busqueda" id="busqueda" onkeyup="busquedaAJAX()">
@@ -35,33 +35,23 @@ function busquedaAJAX(){
             
             <div class="col s12 m4">
                
-                        <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: {{p.enunciado}}</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">a)	{{p.respuesta}}</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">b)	{{p.respuesta2}}</span>
-                        <span class="card-title activator grey-text text-darken-4 truncate">c)	{{p.respuesta3}}</span>
-    <div class="input-field col s12">
-    <select>
-      <option value="0" >Elige una respuesta</option>
-      <option value="1">a)</option>
-      <option value="2">b)</option>
-      <option value="3">c)</option>
-    </select>
-    <label>Respuesta</label>
-  </div>
+                <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: {{p.enunciado}}</span>
+                <span class="card-title activator grey-text text-darken-4 truncate">a)  {{p.respuesta}}</span>
+                <span class="card-title activator grey-text text-darken-4 truncate">b)  {{p.respuesta2}}</span>
+                <span class="card-title activator grey-text text-darken-4 truncate">c)  {{p.respuesta3}}</span>
+                <div class="input-field col s12">
+                  <select>
+                    <option value="0" >Elige una respuesta</option>
+                    <option value="1">a)</option>
+                    <option value="2">b)</option>
+                    <option value="3">c)</option>
+                  </select>
+                <label>Respuesta</label>
+              </div>
             </div>
             {% endfor %}
-
-
         </div>
-
-
-
-    </div>
     <br><br>
-
-    <div class="section">
-
-    </div>
 </div>
 
 {% endblock %}
