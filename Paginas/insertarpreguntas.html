@@ -36,34 +36,35 @@
         <form action="/pregunta/insertarpreguntas" id='insertarpreguntas' method="post">
              
             <div class="input-field">
-                <input type="text" name="tema" id="tema" class="validate" value="%(tema)s"/>
+                <input type="text" name="tema" id="tema" class="validate miclass" value="%(tema)s"/>
                 <label for="tema">Tema:</label>
             </div>
             <div class="input-field">
-                <input type="text" name="enunciado" id="enunciado" required="" value="%(enunciado)s"/>
+                <input type="text" name="enunciado" id="enunciado" required="" class="validate miclass" value="%(enunciado)s"/>
                 <label for="enunciado" >Enunciado de la pregunta:</label>
             </div>
-            <div class="input-field">
-                <input type="text" name="opcion1" id="opcion1" required="" value="%(opcion1)s"/>
+            <div class="input-field miclass">
+                <input type="text" name="opcion1" id="opcion1" class="validate miclass" required="" data-id="1" value="%(opcion1)s"/>
                  <label for="opcion1">Opcion 1:</label>
             </div>
-            <div class="input-field">
-                <input type="text" name="opcion2" id="opcion2" required="" value="%(opcion2)s"/>
+            <div class="input-field miclass">
+                <input type="text" name="opcion2" id="opcion2" class="validate miclass"  required="" data-id="2" value="%(opcion2)s"/>
                 <label for="opcion2">Opcion 2:</label>
             </div>
-            <div class="input-field">
-                <input type="text" name="opcion3" id="opcion3" required="" value="%(opcion3)s"/>
+            <div class="input-field miclass">
+                <input type="text" name="opcion3" id="opcion3" class="validate miclass" required="" data-id="3" value="%(opcion3)s" />
                 <label for="opcion3">Opcion 3:</label>
             </div>
-            <div class="input-field col s12">
-                  <select id="respcorrecta" name="respcorrecta">
-                    <option value="0" >Elige una respuesta</option>
-                    <option value="1">a)</option>
-                    <option value="2">b)</option>
-                    <option value="3">c)</option>
-                  </select>
             <label>Respuesta Correcta</label>
+            <div class="input-field col s12">
+                  <select name="miSelect" id="miSelect" >
+                    <option value="" disable selected >Elige una respuesta</option>
+                    <option id="opt-1" value="1"></option>
+                    <option id="opt-2" value="2"></option>
+                    <option id="opt-3" value="3"></option>
+                  </select>
             </div>
+            <div style="display:none" id="respcorrecta" name="respcorrecta"></div>
             <br>
             <br>
             <br>
@@ -87,11 +88,22 @@
 </div>-->
 <div class="error">%(errores)s</div>
 <script type="text/javascript">
-    
+      
+
   $(document).ready(function() {
-    $('select').material_select();
+    $('.miclass').each(function(){
+          $(this).keyup(function(e){
+            var txt= e.target.value
+            var id=e.target.getAttribute("data-id")
+            $('#opt-'+id).html(txt);
+            $('#opt-'+id).val(txt);
+            console.log(e.target.getAttribute("data-id"));
+            $('#miSelect').material_select();
+          });
+    });  
+   $('#miSelect').material_select();
   });
-            
+        
 </script>
 
   {% endblock %}

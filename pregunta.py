@@ -51,7 +51,7 @@ class InsertarPreguntas(Handler):
         opcion1 = self.request.get('opcion1')
         opcion2 = self.request.get('opcion2')
         opcion3 = self.request.get('opcion3')
-        respcorrecta = self.request.get('respcorrecta')
+        respcorrecta = self.request.get('miSelect')
         errores= ""
         sani_autor=escape_html(autor)
         sani_tema = escape_html(tema)
