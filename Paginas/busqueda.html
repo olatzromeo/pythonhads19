@@ -16,41 +16,26 @@ function busquedaAJAX(){
 <div class="container">
     <div class="section ">
         <div class="row">
-            <div class="input-field col s8">
+            <div class="input-field col s12 m5">
               <form method="post">
+              <div>
                   <i class="material-icons prefix">search</i>
-              <input type="text" name="busqueda" id="busqueda" onkeyup="busquedaAJAX()">
-              <form>
+                  <input type="text" name="busqueda" id="busqueda" Placeholder="Escribe el tema" onkeyup="busquedaAJAX()"><br>
+              </div>
+              </form>
             </div>
         </div>
-
+      
         <!--   Icon Section   -->
         <div id='loadingmessage' style='display:none;'>
           <div class="progress" style="height:20px">
             <div class="indeterminate"></div>
             </div>
         </div>
-        <div class="row" id="preguntas">
-            {% for r in preguntas %}
-            
-            <div class="col s12 m4">
-               
-                <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: {{p.enunciado}}</span>
-                <span class="card-title activator grey-text text-darken-4 truncate">a)  {{p.respuesta}}</span>
-                <span class="card-title activator grey-text text-darken-4 truncate">b)  {{p.respuesta2}}</span>
-                <span class="card-title activator grey-text text-darken-4 truncate">c)  {{p.respuesta3}}</span>
-                <div class="input-field col s12">
-                  <select>
-                    <option value="0" >Elige una respuesta</option>
-                    <option value="1">a)</option>
-                    <option value="2">b)</option>
-                    <option value="3">c)</option>
-                  </select>
-                <label>Respuesta</label>
-              </div>
-            </div>
-            {% endfor %}
-        </div>
+        
+        <div id="preguntas">{% block preguntas %} {% endblock %}</div>
+
+    </div>
     <br><br>
 </div>
 

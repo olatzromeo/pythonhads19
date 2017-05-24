@@ -28,12 +28,6 @@ class Handler(BaseHandler):
         self.response.out.write(*a, **kw)
 
 
-'''class MainHandler(Handler):
-    def get(self):
-        usuario = self.session.get('username')
-        rol = self.session.get('rol')'''
-
-
 class InsertarPreguntas(Handler):
 
     def get(self, autor="", tema=" ", enunciado=" ", opcion1=" ", opcion2=" ", opcion3=" ", respcorrecta=" ", errores=""):
@@ -120,61 +114,35 @@ class BusquedaHandler(Handler):
         else:
             preguntas = []
 
-        respuesta = ""
+        resp = ""
         pregunta_card = '''
-            <div class="col s12 m4">
-               
-                <span class="card-title activator grey-text text-darken-4 truncate">Enunciado: %(enunciado)s</span>
-                <span class="card-title activator grey-text text-darken-4 truncate">a)  %(respuesta)s</span>
-                <span class="card-title activator grey-text text-darken-4 truncate">b)  %(respuesta2)s</span>
-                <span class="card-title activator grey-text text-darken-4 truncate">c)  %(respuesta3)s</span>
-                <div class="input-field col s12">
-                    <select>
-                        <option value="0" >Elige una respuesta</option>
-                        <option value="1">a)</option>
-                        <option value="2">b)</option>
-                        <option value="3">c)</option>
-                    </select>
-                <label>Respuesta</label>
+            <div class="section">
+                <div class="row">
+                    <div class="card-panel blue lighten-3 col s12 m6 l8">
+                        <span style="font-size: 16px; font-weight: bold;">Tema: </span><span>%(tema)s</span><br>
+                        <span style="font-size: 16px; font-weight: bold;">Enunciado: </span><span>%(enunciado)s</span><br>
+                        <p style="font-size: 16px; font-weight: bold;">Opciones</p>
+                        <span style="font-size: 16px; font-weight: bold;">Op1: </span><span> %(respuesta)s</span><br>
+                        <span style="font-size: 16px; font-weight: bold;">Op2: </span><span> %(respuesta2)s</span><br>
+                        <span style="font-size: 16px; font-weight: bold;">Op3: </span><span> %(respuesta3)s</span><br>
+                    </div>
                 </div>
-             </div>'''
-
+            </div>
+        '''
         for p in preguntas:
-            respuesta += pregunta_card % {"enunciado" :p.enunciado, "respuesta" : p.respuesta, "respuesta2": p.respuesta2, "respuesta3": p.respuesta3}
+            resp += pregunta_card % {"tema": p.tema, "enunciado" :p.enunciado, "respuesta" : p.respuesta, "respuesta2": p.respuesta2, "respuesta3": p.respuesta3}
 
-        self.response.out.write(respuesta)
+        self.response.out.write(resp)
 
 def buscar_preguntas(busqueda):
     resultado = []
     preguntas = Pregunta.query().fetch()
     for p in preguntas:
-        if p.tema in busqueda:
+        if busqueda in p.tema:
             #print(r.enunciado)
-            resultado.append(r)
+            resultado.append(p)
     return resultado
-'''class VisualizarPreguntas(Handler):
-    def get(self):
-        login = "no"
-        usuario = self.session.get('username')
-        rol = self.session.get('rol')
-        if usuario:
-            login = "si"
-        if not rol:
-            rol = "Anonimo"
-        preguntas = Preguntas.query().fetch()
-        self.render("visualizarpreguntas.html", rol=rol, login=login, preguntas=preguntas)'''
 
-'''
-class RegisterHandler(Handler):
-    def get(self):
-        rol = self.session.get('rol')
-        if not rol:
-            rol = "Anonimo"
-        if rol == "Anonimo":
-            self.write("No tienes permiso")
-        else:
-            self.render_upload("insertarpreguntas.html", rol=rol, login='si')
-'''
 
 config = {}
 config['webapp2_extras.sessions'] = {
