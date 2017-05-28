@@ -3,7 +3,7 @@ import os
 import webapp2
 import jinja2
 from google.appengine.ext import ndb
-from Clases.Usuarios import Anonimo
+from Clases.Anonimo import Anonimo
 
 from session_module import BaseSessionHandler
 
@@ -53,6 +53,7 @@ class MainHandler(Handler):
 
         if error:
             self.write_main("", "", "", "", anonimo_nick, nick_error)
+
         else:
             anonimo = Anonimo.query(Anonimo.nick == anonimo_nick).count()
             if anonimo == 0:
@@ -62,13 +63,13 @@ class MainHandler(Handler):
                 a.fallos = 0
                 a.put()
                 rol="Anonimo"
-                login="si"
-                self.session['Anonimo'] = anonimo_nick
+                login="no"
+                self.session['nick'] = anonimo_nick
                 self.render("preguntas.html", rol=rol, login=login)
             else:
                 rol="Anonimo"
-                login="si"
-                self.session['Anonimo'] = anonimo_nick
+                login="no"
+                self.session['nick'] = anonimo_nick
                 self.render("preguntas.html", rol=rol, login=login)
 
 class InicioSesionHandler(Handler):

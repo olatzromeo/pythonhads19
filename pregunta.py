@@ -8,7 +8,7 @@ import uuid
 import hashlib
 from Clases.Preguntas import Pregunta
 from Clases.Usuarios import Usuario
-from Clases.Usuarios import Anonimo
+from Clases.Anonimo import Anonimo
 from google.appengine.ext import ndb
 
 template_dir = os.path.join(os.path.dirname(__file__), 'Paginas')
@@ -150,36 +150,34 @@ def buscar_preguntas(busqueda):
             resultado.append(p)
     return resultado
 
-'''class QuizHandler(Handler):
+class QuizHandler(Handler):
 
 	def get(self):
 			nick = self.session.get('nick')
 			#rol="Anonimo"
 			login="si"
-			tema = self.request.get('tema')
 			preguntas = Pregunta.query().order(Pregunta.id_pregunta)
-			self.render("quiz.html", rol="", login=login, preguntas=preguntas,)
+			self.render("Quiz.html", rol="", login=login, preguntas=preguntas,)
 		
-   def post(self):
-        tema = self.request.get('tema')
-        nick = self.session.get('nick')
-        preguntas = Pregunta.query(Pregunta.tema==tema).order(Pregunta.id_pregunta)
-        acertadas = 0
-        falladas = 0
+	def post(self):
+		nick = self.session.get('nick')
+		preguntas = Pregunta.query().order(Pregunta.id_pregunta)
+		acertadas = 0
+		falladas = 0
 
-        for p in preguntas:
-            user_respuesta = self.request.get(p.id_pregunta)
-            if user_respuesta == p.solucion:
-                acertadas = acertadas + 1
-            else:
-                falladas = falladas + 1
+		for p in preguntas:
+			user_respuesta = self.request.get(p.id_pregunta)
+			if user_respuesta == p.solucion:
+				acertadas = acertadas + 1
+			else:
+				falladas = falladas + 1
 
-        anonimo = Anonimo.query(Anonimo.nick == self.session.get('nick')).get()
-        anonimo.fallos = anonimo.fallos + falladas
-        anonimo.aciertos = anonimo.aciertos + acertadas
-        anonimo.put()
-        self.write(render_str("resultados.html", rol="Anonimo", login='no') % { "nick": nick, "tema": tema, "acertadas": acertadas , "falladas": falladas})
-'''
+		anonimo = Anonimo.query(Anonimo.nick == self.session.get('nick')).get()
+		anonimo.fallos = anonimo.fallos + falladas
+		anonimo.aciertos = anonimo.aciertos + acertadas
+		anonimo.put()
+		self.write(render_str("resultados.html", rol="Anonimo", login='no') % { "nick": nick, "acertadas": acertadas , "falladas": falladas})
+
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -190,7 +188,7 @@ app = webapp2.WSGIApplication([
     ('/pregunta/insertarpreguntas', InsertarPreguntas),
     ('/pregunta/visualizarpreguntas', PreguntasAllHandler),
     ('/pregunta/busqueda', BusquedaHandler),
-    #('/pregunta/quiz', QuizHandler),
+    ('/pregunta/Quiz', QuizHandler),
     ('/pregunta/comprobarPregunta', ComprobarPregunta)
 
 ], config=config, debug=True)
