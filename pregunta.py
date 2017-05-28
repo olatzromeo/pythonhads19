@@ -154,10 +154,10 @@ class QuizHandler(Handler):
 
 	def get(self):
 			nick = self.session.get('nick')
-			#rol="Anonimo"
+			rol="Anonimo"
 			login="si"
 			preguntas = Pregunta.query().order(Pregunta.id_pregunta)
-			self.render("Quiz.html", rol="", login=login, preguntas=preguntas,)
+			self.render("Quiz.html", rol=rol, login=login, preguntas=preguntas)
 		
 	def post(self):
 		nick = self.session.get('nick')

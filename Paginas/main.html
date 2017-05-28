@@ -29,7 +29,12 @@
       <div class="nav-wrapper teal" >
         <a href="/" class="brand-logo"><img class="responsive-img" src="/images/resized.png"></img></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          {% if login =='no' and rol=='Anonimo' %}
+          {% if login =='no'and rol==''%}
+          <li><a href="/iniciosesion">Iniciar Sesión</a></li>
+          <li><a href="/registro">Registro</a></li>
+          <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
+          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>
+          {% elif rol=='Anonimo' %}
           <li><a href="/iniciosesion">Iniciar Sesión</a></li>
           <li><a href="/registro">Registro</a></li>
           <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>

@@ -35,7 +35,7 @@ class MainHandler(Handler):
         if usuario:
             login="si"
         if not rol:
-            rol="Anonimo"
+            rol=""
         self.render("index.html", rol=rol, login=login)
 
     def post(self):
