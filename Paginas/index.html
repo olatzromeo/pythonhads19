@@ -4,5 +4,20 @@
 
 	<h4>BIENVENIDO A QUIZ!!</h4>
 	<div style="text-align: center;"><img src="/images/bienve-puzzle.png"/> </div>
+	<form id="jugar" method="post">
+
+					<div class="header">
+						<h3> JUGAR </h3>
+					</div>
+
+				<div class="sep"> </div>
+
+				<div class="inputs">
+					<p> Introduce un nick para jugar:</p> 
+					<input type="text" required name="nick" size="21" value="%(nick)s" autofocus="" placeholder="Tu nick..." /> 
+					<p class="error"> {{nick_error}} </p>
+					<p> <input id="submit" value="EMPEZAR" type="submit" /> </p>
+				</div>
+				</form>
 
 {% endblock %}

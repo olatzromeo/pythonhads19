@@ -8,6 +8,7 @@ import uuid
 import hashlib
 from Clases.Preguntas import Pregunta
 from Clases.Usuarios import Usuario
+from Clases.Usuarios import Anonimo
 from google.appengine.ext import ndb
 
 template_dir = os.path.join(os.path.dirname(__file__), 'Paginas')
@@ -60,12 +61,10 @@ class InsertarPreguntas(Handler):
 
         if tema != "" and enunciado != "" and opcion1 != "" and opcion2 != "" and opcion3 != "" and respcorrecta != "":
             p = Pregunta()
-            '''p.id_pregunta = p.get_id()
-            pregunta = Preguntas.query(Pregunta.id_pregunta == p.id_pregunta).count()
-            if  pregunta == 0:'''
+            num = Pregunta.query().count() + 1
             p.tema = tema
             p.autor=autor
-            p.id_pregunta = self.request.get('id')
+            p.id_pregunta = "preg%i" %num
             p.id_usuario = u.get_id()
             p.enunciado = enunciado
             p.solucion = respcorrecta
@@ -73,8 +72,7 @@ class InsertarPreguntas(Handler):
             p.respuesta2 = opcion2
             p.respuesta3 = opcion3
             p.put()
-            #p.add_pregunta(p)
-            self.render("errores.html", rol='Usuario', login='si', message='Pregunta creada correctamente', )
+            self.render("errores.html", rol='Usuario', login='si', message='Pregunta creada correctamente' )
 
         else:
             self.write(render_str("insertarpreguntas.html",rol='Usuario', login='si') % { "autor": autor, "tema": sani_tema, "enunciado": sani_enunciado,"opcion1": sani_opc1, "opcion2": sani_opc2,"opcion3": sani_opc3,"respcorrecta": sani_respcorrecta,
@@ -91,6 +89,16 @@ class PreguntasAllHandler(Handler):
             rol = "Anonimo"
         preguntas = Pregunta.query().fetch()
         self.render("verpreguntas.html", rol=rol, login=login, preguntas=preguntas)
+
+class ComprobarPregunta(Handler):
+	def post(self):
+		codPreg = self.request.get('codPreg')
+		preg = Pregunta.query(Pregunta.id_pregunta == codPreg).get()
+		respuesta = self.request.get('selectedOption')
+		if respuesta == preg.solucion:
+			self.response.out.write('BIEN')
+		else:
+			self.response.out.write('MAL')
         
 class BusquedaHandler(Handler):
     def get(self):
@@ -143,6 +151,16 @@ def buscar_preguntas(busqueda):
             resultado.append(p)
     return resultado
 
+class QuizHandler(Handler):
+	def get(self):
+			nick = self.session.get('Anonimo')
+			rol="Anonimo"
+			login="si"
+			tema = self.request.get('tema')
+			preguntas = Pregunta.query().order(Pregunta.id_pregunta)
+			self.render("Quiz.html", rol=rol, login=login, preguntas=preguntas)
+			###FALTA HACER EL POST PARA MANDAR LAS RESPUESTAS Y AÑADIR A LAS VARIABLES FALLOS Y ACIERTOS Y AVISAR AL JUGADOR DE ELLAS###
+
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -152,8 +170,8 @@ config['webapp2_extras.sessions'] = {
 app = webapp2.WSGIApplication([
     ('/pregunta/insertarpreguntas', InsertarPreguntas),
     ('/pregunta/visualizarpreguntas', PreguntasAllHandler),
-    ('/pregunta/busqueda', BusquedaHandler)
-    # ('/pregunta/crear', RegisterHandler),
-    #('/iniciosesion', InicioSesion),
-    #('/cerrarsesion', CerrarSesion)
+    ('/pregunta/busqueda', BusquedaHandler),
+    ('/pregunta/Quiz', QuizHandler),
+    ('/pregunta/comprobarPregunta', ComprobarPregunta)
+
 ], config=config, debug=True)

@@ -2,6 +2,9 @@ import cgi
 import os
 import webapp2
 import jinja2
+from google.appengine.ext import ndb
+from Clases.Usuarios import Anonimo
+
 from session_module import BaseSessionHandler
 
 
@@ -22,8 +25,11 @@ class Handler(BaseSessionHandler):
         self.response.out.write(*a, **kw)
 
 class MainHandler(Handler):
+    def write_main(self, last_nick="", aciertos="", total="", onload="", nick="", nick_error=""):
+        self.render("index.html", nick=last_nick, aciertos=aciertos, total=total)
+
     def get(self):
-        usuario=self.session.get('nickusuario')
+        usuario=self.session.get('nick')
         rol=self.session.get('rol')
         login="no"
         if usuario:
@@ -31,6 +37,39 @@ class MainHandler(Handler):
         if not rol:
             rol="Anonimo"
         self.render("index.html", rol=rol, login=login)
+
+    def post(self):
+        def escape_html(s):
+            return cgi.escape(s, quote=True)
+
+        anonimo_nick = self.request.get('nick')
+        sani_nick = escape_html(anonimo_nick)
+        nick_error = ""
+
+        error = False
+        if not anonimo_nick:
+            nick_error = "Debes introducir un nick"
+            error = True
+
+        if error:
+            self.write_main("", "", "", "", anonimo_nick, nick_error)
+        else:
+            anonimo = Anonimo.query(Anonimo.nick == anonimo_nick).count()
+            if anonimo == 0:
+                a = Anonimo()
+                a.nick = anonimo_nick
+                a.pregCorrectas = 0
+                a.pregFalladas = 0
+                a.put()
+                rol="Anonimo"
+                login="si"
+                self.session['Anonimo'] = anonimo_nick
+                self.render("preguntas.html", rol=rol, login=login)
+            else:
+                rol="Anonimo"
+                login="si"
+                self.session['Anonimo'] = anonimo_nick
+                self.render("preguntas.html", rol=rol, login=login)
 
 class InicioSesionHandler(Handler):
     def get(self):

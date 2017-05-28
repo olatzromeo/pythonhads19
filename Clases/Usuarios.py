@@ -83,3 +83,9 @@ class MiPregunta(ndb.Model):
 
     def delete(self):
         self.key.delete()
+
+class Anonimo(ndb.Model):
+    nick = ndb.StringProperty()
+    Aciertos = ndb.IntegerProperty()
+    Fallos = ndb.IntegerProperty()
+    creado = ndb.DateTimeProperty(auto_now_add = True)
