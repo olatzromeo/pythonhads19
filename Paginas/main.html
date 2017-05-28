@@ -34,21 +34,19 @@
           <li><a href="/registro">Registro</a></li>
           <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
           <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>
-          {% elif rol=='Anonimo' %}
+          {% else %}
           <li><a href="/iniciosesion">Iniciar Sesión</a></li>
           <li><a href="/registro">Registro</a></li>
           <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
           <li><a href="/pregunta/Quiz">Jugar</a></li>
-          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>           
+          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li> 
+            {% if rol =='Usuario' and login=='si' %}
+            <li><a href="/pregunta/insertarpreguntas">Añadir pregunta</a></li>
+            <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
+            {% endif %}          
           {% endif %}
 
-          {% if rol =='Usuario' and login=='si' %}
-          <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
-          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li> 
-          <li><a href="/pregunta/Quiz">Jugar</a></li>
-          <li><a href="/pregunta/insertarpreguntas">Añadir pregunta</a></li>
-          <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
-          {% endif %}
+          
         </ul>
       </div>
     </nav>
