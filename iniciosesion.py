@@ -32,7 +32,7 @@ class CerrarSesion(Handler):
         for k in self.session.keys():
             usuariosesion=self.session[k]
             del self.session[k]
-        self.render("cerrarsesion.html", rol='Anonimo', login='no', message = usuariosesion ,)
+        self.render("cerrarsesion.html", rol='Anonimo', login='no', message = usuariosesion,)
 
 class InicioSesion(Handler):
 
@@ -83,7 +83,6 @@ def valid_password(password):
 
 def valid_email(email):
     return EMAIL_RE.match(email)
-
 
 
 config = {}

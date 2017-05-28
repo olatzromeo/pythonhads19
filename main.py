@@ -73,7 +73,7 @@ class MainHandler(Handler):
 
 class InicioSesionHandler(Handler):
     def get(self):
-        usuario = self.session.get('nickusuario')
+        usuario = self.session.get('username')
         rol = self.session.get('rol')
         login="no"
         if usuario:

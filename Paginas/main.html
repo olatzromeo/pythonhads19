@@ -25,25 +25,24 @@
   <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/stylesheets/js/materialize.min.js"></script>
-
     <nav>
       <div class="nav-wrapper teal" >
         <a href="/" class="brand-logo"><img class="responsive-img" src="/images/resized.png"></img></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          {% if login == 'no' and rol==''%}
+          {% if login =='no' and rol=='Anonimo' %}
           <li><a href="/iniciosesion">Iniciar Sesión</a></li>
           <li><a href="/registro">Registro</a></li>
-          {% elif rol == 'Anonimo' %}
-          <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
           <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
-          <li><a href="/pregunta/Quiz">Jugar</a></li>
-          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>  
-          {% else %}
-          <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
+          <li><a href="/pregunta/quiz">Jugar</a></li>
+          <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li>           
+          {% endif %}
+
+          {% if rol =='Usuario' and login=='si' %}
           <li><a href="/pregunta/busqueda">Buscar pregunta</a></li>
           <li><a href="/pregunta/visualizarpreguntas">Ver todas las preguntas</a></li> 
-          <li><a href="/pregunta/Quiz">Jugar</a></li>
+          <li><a href="/pregunta/quiz">Jugar</a></li>
           <li><a href="/pregunta/insertarpreguntas">Añadir pregunta</a></li>
+          <li><a href="/cerrarsesion">Cerrar Sesión</a></li>
           {% endif %}
         </ul>
       </div>

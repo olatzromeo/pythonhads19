@@ -115,7 +115,6 @@ class BusquedaHandler(Handler):
     def post(self):
 
         buscar = self.request.get('buscar')
-
         print("este es el buscar :"+buscar)
         if buscar:
             preguntas = buscar_preguntas(buscar)
@@ -151,17 +150,17 @@ def buscar_preguntas(busqueda):
             resultado.append(p)
     return resultado
 
-class QuizHandler(Handler):
+'''class QuizHandler(Handler):
 
 	def get(self):
 			nick = self.session.get('nick')
-			rol="Anonimo"
+			#rol="Anonimo"
 			login="si"
 			tema = self.request.get('tema')
 			preguntas = Pregunta.query().order(Pregunta.id_pregunta)
-			self.render("quiz.html", rol=rol, login=login, preguntas=preguntas)
+			self.render("quiz.html", rol="", login=login, preguntas=preguntas,)
 		
-    def post(self):
+   def post(self):
         tema = self.request.get('tema')
         nick = self.session.get('nick')
         preguntas = Pregunta.query(Pregunta.tema==tema).order(Pregunta.id_pregunta)
@@ -179,8 +178,8 @@ class QuizHandler(Handler):
         anonimo.fallos = anonimo.fallos + falladas
         anonimo.aciertos = anonimo.aciertos + acertadas
         anonimo.put()
-        self.write(render_str("resultados.html", rol='Anonimo', login='no') % { "nick": nick, "tema": tema, "acertadas": acertadas , "falladas": falladas})
-
+        self.write(render_str("resultados.html", rol="Anonimo", login='no') % { "nick": nick, "tema": tema, "acertadas": acertadas , "falladas": falladas})
+'''
 
 config = {}
 config['webapp2_extras.sessions'] = {
@@ -191,7 +190,7 @@ app = webapp2.WSGIApplication([
     ('/pregunta/insertarpreguntas', InsertarPreguntas),
     ('/pregunta/visualizarpreguntas', PreguntasAllHandler),
     ('/pregunta/busqueda', BusquedaHandler),
-    ('/pregunta/quiz', QuizHandler),
+    #('/pregunta/quiz', QuizHandler),
     ('/pregunta/comprobarPregunta', ComprobarPregunta)
 
 ], config=config, debug=True)
