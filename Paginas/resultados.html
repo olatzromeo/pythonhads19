@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+
+{% block content %}
+	
+	<div class="row">
+      	<div class="col s2 " style="text-align: center;">
+		<div class="header">
+			<h3> RESULTADOS </h3>
+		</div>
+		
+			<h1>Resultados del Quiz sobre %(tema)s :</h1>
+			<br/>
+			<p>"%(nick)s" jugando...</p>
+			
+			<div class="card-panel blue lighten-3 col s12 m6 l8">
+                <span style="font-size: 16px; font-weight: bold;">Tema: </span><span>%(tema)s</span><br>
+                <span style="font-size: 16px; font-weight: bold;">Aciertos: </span><span>%(acertadas)s</span><br>
+                <span style="font-size: 16px; font-weight: bold;">Fallos: </span><span> %(falladas)s</span><br>    
+            </div>
+		</div>
+	</div>
+
+{% endblock %}

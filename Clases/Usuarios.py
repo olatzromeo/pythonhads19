@@ -86,6 +86,6 @@ class MiPregunta(ndb.Model):
 
 class Anonimo(ndb.Model):
     nick = ndb.StringProperty()
-    Aciertos = ndb.IntegerProperty()
-    Fallos = ndb.IntegerProperty()
+    aciertos = ndb.IntegerProperty()
+    fallos = ndb.IntegerProperty()
     creado = ndb.DateTimeProperty(auto_now_add = True)

@@ -152,14 +152,34 @@ def buscar_preguntas(busqueda):
     return resultado
 
 class QuizHandler(Handler):
+
 	def get(self):
-			nick = self.session.get('Anonimo')
+			nick = self.session.get('nick')
 			rol="Anonimo"
 			login="si"
 			tema = self.request.get('tema')
 			preguntas = Pregunta.query().order(Pregunta.id_pregunta)
 			self.render("Quiz.html", rol=rol, login=login, preguntas=preguntas)
-			###FALTA HACER EL POST PARA MANDAR LAS RESPUESTAS Y AÑADIR A LAS VARIABLES FALLOS Y ACIERTOS Y AVISAR AL JUGADOR DE ELLAS###
+		
+    def post(self):
+        tema = self.request.get('tema')
+        nick = self.session.get('nick')
+        preguntas = Pregunta.query(Pregunta.tema==tema).order(Pregunta.id_pregunta)
+        acertadas = 0
+        falladas = 0
+
+        for p in preguntas:
+            user_respuesta = self.request.get(p.id_pregunta)
+            if user_respuesta == p.solucion:
+                acertadas = acertadas + 1
+            else:
+                falladas = falladas + 1
+
+        anonimo = Anonimo.query(Anonimo.nick == self.session.get('nick')).get()
+        anonimo.fallos = anonimo.fallos + falladas
+        anonimo.aciertos = anonimo.aciertos + acertadas
+        anonimo.put()
+        self.write(render_str("resultados.html", rol='Anonimo', login='no') % { "nick": nick, "tema": tema, "acertadas": acertadas , "falladas": falladas})
 
 
 config = {}
@@ -171,7 +191,7 @@ app = webapp2.WSGIApplication([
     ('/pregunta/insertarpreguntas', InsertarPreguntas),
     ('/pregunta/visualizarpreguntas', PreguntasAllHandler),
     ('/pregunta/busqueda', BusquedaHandler),
-    ('/pregunta/Quiz', QuizHandler),
+    ('/pregunta/quiz', QuizHandler),
     ('/pregunta/comprobarPregunta', ComprobarPregunta)
 
 ], config=config, debug=True)

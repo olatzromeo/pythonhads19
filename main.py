@@ -58,8 +58,8 @@ class MainHandler(Handler):
             if anonimo == 0:
                 a = Anonimo()
                 a.nick = anonimo_nick
-                a.pregCorrectas = 0
-                a.pregFalladas = 0
+                a.aciertos = 0
+                a.fallos = 0
                 a.put()
                 rol="Anonimo"
                 login="si"
