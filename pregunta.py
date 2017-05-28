@@ -159,7 +159,7 @@ class QuizHandler(Handler):
 			login="si"
 			tema = self.request.get('tema')
 			preguntas = Pregunta.query().order(Pregunta.id_pregunta)
-			self.render("Quiz.html", rol=rol, login=login, preguntas=preguntas)
+			self.render("quiz.html", rol=rol, login=login, preguntas=preguntas)
 		
     def post(self):
         tema = self.request.get('tema')
